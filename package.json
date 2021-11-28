@@ -9,6 +9,7 @@
     "nuxt3": "latest"
   },
   "dependencies": {
-    "chart.js": "^3.6.0"
+    "@fxts/core": "^0.2.1",
+    "chartjs-plugin-dragdata": "^2.2.0"
   }
 }
