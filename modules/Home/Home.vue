@@ -24,16 +24,17 @@ export default {
 </script>
 <style module>
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
-  row-gap: 20px;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .container {
     grid-template-columns: 1fr;
+    row-gap: 100px;
+    margin: 40px 0 60px;
   }
 }
 </style>

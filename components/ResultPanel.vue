@@ -27,6 +27,9 @@ export default defineComponent({
 </script>
 <style module>
 .container {
-  padding: 20px 0 0 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgb(0, 0, 0, 80%);
+  background: rgb(0, 0, 0, 10%);
 }
 </style>
