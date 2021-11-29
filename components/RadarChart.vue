@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="ctx" width="450" height="450"></canvas>
+  <canvas ref="ctx" width="600" height="400"></canvas>
 </template>
 
 <script>
@@ -31,6 +31,8 @@ export default {
       yellow: "rgba(199, 185, 38)",
     };
     const color = colorMap[props.color] || colorMap["blue"];
+    const labels = Object.keys(props.data);
+    const ladderInfo = useLadderInfo();
 
     onMounted(() => {
       if (!ctx.value) return console.error("No canvas element");
@@ -38,7 +40,7 @@ export default {
       new Chart(ctx.value, {
         type: "radar",
         data: {
-          labels: Object.keys(props.data),
+          labels: labels,
           datasets: [
             {
               label: props.title,
@@ -89,7 +91,7 @@ export default {
               },
               onDragEnd: function (e, datasetIndex, index, value) {
                 e.target.style.cursor = "default";
-                // console.log(datasetIndex, index, value)
+                ladderInfo.value[props.title][labels[index]] = value;
               },
               magnet: {
                 to: Math.round, // to: (value) => value + 5
@@ -98,7 +100,7 @@ export default {
           },
           scales: {
             r: {
-              max: 6,
+              max: 5,
               min: -1,
               stepSize: 1,
               pointLabels: {
