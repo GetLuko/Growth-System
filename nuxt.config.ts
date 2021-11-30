@@ -5,4 +5,5 @@ export default defineNuxtConfig({
   bridge: {
     nitro: false,
   },
+  css: ["~/assets/index.scss"],
 });

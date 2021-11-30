@@ -6,7 +6,9 @@
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "nuxt3": "latest"
+    "nuxt3": "latest",
+    "sass": "^1.44.0",
+    "sass-loader": "10"
   },
   "dependencies": {
     "@fxts/core": "^0.2.1",
