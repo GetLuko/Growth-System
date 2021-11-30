@@ -75,7 +75,7 @@ export default {
               radius: 5,
             },
           },
-          responsive: false,
+          responsive: true,
           onHover: function (e) {
             const point = e.chart.getElementsAtEventForMode(
               e,

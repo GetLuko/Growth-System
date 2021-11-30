@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.container" :key="chartId">
-    <RadarChart
-      v-for="(key, index) in Object.keys(ladderInfo)"
-      :key="index"
-      :data="ladderInfo[key]"
-      :title="key"
-      :color="colors[index]"
-      :class="$style.chart"
-    />
+    <div v-for="(key, index) in Object.keys(ladderInfo)" :key="index">
+      <RadarChart
+        :data="ladderInfo[key]"
+        :title="key"
+        :color="colors[index]"
+        :class="$style.chart"
+      />
+    </div>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
 </script>
 <style lang="scss" module>
 .container {
-  margin-top: 40px;
+  margin-top: 80px;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
