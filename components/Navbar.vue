@@ -4,7 +4,7 @@
       <div :class="$style.logo">Growth Ladder</div>
       <ul :class="$style.menus">
         <li :class="$style.menu"><a>import</a></li>
-        <li :class="$style.menu"><a>export</a></li>
+        <li :class="$style.menu" @click="onExport">export</li>
       </ul>
     </div>
     <div :class="$style.right">
@@ -20,10 +20,14 @@ import { defineComponent } from "@vue/composition-api";
 export default defineComponent({
   setup() {
     const { points, level, title } = useResult();
+    const { exportLadderInfo } = useLadderInfo();
+
+    const onExport = () => exportLadderInfo();
     return {
       points,
       level,
       title,
+      onExport,
     };
   },
 });

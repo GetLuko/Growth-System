@@ -32,7 +32,7 @@ export default {
     };
     const color = colorMap[props.color] || colorMap["blue"];
     const labels = Object.keys(props.data);
-    const ladderInfo = useLadderInfo();
+    const { ladderInfo } = useLadderInfo();
 
     onMounted(() => {
       if (!ctx.value) return console.error("No canvas element");

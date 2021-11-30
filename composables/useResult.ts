@@ -33,7 +33,7 @@ const levelToTitle = {
 };
 
 export const useResult = () => {
-  const ladderInfo = useLadderInfo();
+  const { ladderInfo } = useLadderInfo();
 
   const points = computed(() => {
     return pipe(

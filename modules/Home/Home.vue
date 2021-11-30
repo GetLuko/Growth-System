@@ -16,7 +16,7 @@ export default {
   layout: "default",
   setup() {
     const colors = ["blue", "red", "green", "yellow"];
-    const ladderInfo = useLadderInfo();
+    const { ladderInfo } = useLadderInfo();
 
     return { ladderInfo, colors };
   },
