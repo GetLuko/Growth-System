@@ -66,6 +66,7 @@ export default {
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: color,
+              pointHitRadius: 30,
             },
           ],
         },
