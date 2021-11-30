@@ -3,7 +3,18 @@
     <div :class="$style.left">
       <div :class="$style.logo">Growth Ladder</div>
       <ul :class="$style.menus">
-        <li :class="$style.menu"><a>import</a></li>
+        <li :class="$style.menu" @click="onImport">
+          <span> import </span>
+          <input
+            ref="inputTag"
+            type="file"
+            accept="application/json"
+            name="files[]"
+            size="1"
+            :class="$style.hide"
+            @change="onUpload"
+          />
+        </li>
         <li :class="$style.menu" @click="onExport">export</li>
       </ul>
     </div>
@@ -20,14 +31,27 @@ import { defineComponent } from "@vue/composition-api";
 export default defineComponent({
   setup() {
     const { points, level, title } = useResult();
-    const { exportLadderInfo } = useLadderInfo();
+    const { exportLadderInfo, importLadderInfo } = useLadderInfo();
+    const inputTag = ref(null);
 
+    const onImport = () => {
+      if (!inputTag.value) return alert("Fatal error");
+      inputTag.value.click();
+    };
+    const onUpload = (e) => {
+      const file = e.target.files[0];
+      importLadderInfo(file);
+    };
     const onExport = () => exportLadderInfo();
+
     return {
       points,
       level,
       title,
+      inputTag,
       onExport,
+      onImport,
+      onUpload,
     };
   },
 });
@@ -65,5 +89,8 @@ export default defineComponent({
 }
 .info {
   padding: 15px;
+}
+.hide {
+  display: none;
 }
 </style>

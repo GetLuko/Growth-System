@@ -1,7 +1,9 @@
 <template>
   <div :class="$style.container">
-    <Navbar :class="$style.navbar" />
-    <slot />
+    <ClientOnly>
+      <Navbar :class="$style.navbar" />
+      <slot />
+    </ClientOnly>
   </div>
 </template>
 

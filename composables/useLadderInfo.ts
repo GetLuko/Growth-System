@@ -1,5 +1,6 @@
 import { ILadderInfo } from "~/interface/LadderInfo.interface";
 import { useState } from "#app";
+
 const init = {
   Engineering: {
     Frontend: 0,
@@ -33,7 +34,16 @@ const init = {
 };
 
 export const useLadderInfo = () => {
-  const ladderInfo = useState("LadderInfo", (): ILadderInfo => init);
+  const ladderInfo = useState<ILadderInfo>("LadderInfo", () => init);
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    try {
+      const res = JSON.parse(e.target.result);
+      ladderInfo.value = res;
+    } catch (error) {
+      alert("Invalid JSON file");
+    }
+  };
 
   return {
     ladderInfo,
@@ -53,6 +63,8 @@ export const useLadderInfo = () => {
         console.error("Fail to export", error);
       }
     },
-    importLadderInfo: () => {},
+    importLadderInfo: (file) => {
+      reader.readAsText(file);
+    },
   };
 };
