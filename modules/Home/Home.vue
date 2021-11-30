@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.container">
+  <div :class="$style.container" :key="chartId">
     <RadarChart
       v-for="(key, index) in Object.keys(ladderInfo)"
       :key="index"
@@ -16,9 +16,9 @@ export default {
   layout: "default",
   setup() {
     const colors = ["blue", "red", "green", "yellow"];
-    const { ladderInfo } = useLadderInfo();
+    const { ladderInfo, chartId } = useLadderInfo();
 
-    return { ladderInfo, colors };
+    return { ladderInfo, colors, chartId };
   },
 };
 </script>

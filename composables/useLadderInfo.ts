@@ -35,6 +35,8 @@ const init = {
 
 export const useLadderInfo = () => {
   const ladderInfo = useState<ILadderInfo>("LadderInfo", () => init);
+  const chartId = useState<number>(("graphId", () => Date.now()));
+
   const reader = new FileReader();
   reader.onload = (e: any) => {
     try {
@@ -42,6 +44,8 @@ export const useLadderInfo = () => {
       ladderInfo.value = res;
     } catch (error) {
       alert("Invalid JSON file");
+    } finally {
+      chartId.value = Date.now();
     }
   };
 
@@ -66,5 +70,6 @@ export const useLadderInfo = () => {
     importLadderInfo: (file) => {
       reader.readAsText(file);
     },
+    chartId,
   };
 };
