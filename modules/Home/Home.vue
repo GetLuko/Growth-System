@@ -24,6 +24,7 @@ export default {
 </script>
 <style module>
 .container {
+  margin-top: 40px;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -34,7 +35,7 @@ export default {
   .container {
     grid-template-columns: 1fr;
     row-gap: 100px;
-    margin: 40px 0 60px;
+    margin: 80px 0 60px;
   }
 }
 </style>
