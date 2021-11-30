@@ -34,12 +34,13 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0;
   height: 50px;
-  background-color: #f8f9fa;
+  background-color: #e7e7e7;
 }
 .logo {
-  margin-right: 20px;
+  padding: 0 20px;
+  margin-right: 10px;
 }
 .menus {
   display: flex;
