@@ -4,10 +4,10 @@
       Points: <span>{{ points }}</span>
     </div>
     <div>
-      Level: <span>{{ level }}</span>
+      Sub Level: <span>{{ level }}</span>
     </div>
     <div>
-      Title: <span>{{ title }} </span>
+      Level Name: <span>{{ title }} </span>
     </div>
   </div>
 </template>

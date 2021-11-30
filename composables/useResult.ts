@@ -1,7 +1,6 @@
-import { useState } from "#app";
 import { computed } from "vue";
 import { useLadderInfo } from "./useLadderInfo";
-import { pipe, flatMap, map, toArray, reduce, find } from "@fxts/core";
+import { pipe, flatMap, map, reduce, find } from "@fxts/core";
 
 const milestoneToPoint = [0, 1, 3, 6, 12, 20];
 const pointToLevel = {

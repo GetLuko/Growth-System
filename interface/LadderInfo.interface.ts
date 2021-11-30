@@ -3,7 +3,8 @@ export interface ILadderInfo {
     Frontend: number;
     Hardware: number;
     Mobile: number;
-    Data: number;
+    DataEngineering: number;
+    DataAnalytics: number;
     Ops: number;
     Backend: number;
     Firmware: number;
