@@ -3,10 +3,17 @@
 </template>
 
 <script>
-import Chart from "chart.js/auto";
+import {
+  Chart,
+  RadialLinearScale,
+  RadarController,
+  PointElement,
+  LineElement,
+  Filler,
+  Legend,
+} from "chart.js";
 import "chartjs-plugin-dragdata";
 import { onMounted, ref } from "vue";
-
 export default {
   props: {
     data: {
@@ -23,6 +30,14 @@ export default {
     },
   },
   setup(props) {
+    Chart.register(
+      RadialLinearScale,
+      RadarController,
+      PointElement,
+      LineElement,
+      Filler,
+      Legend,
+    );
     const ctx = ref(null);
     const colorMap = {
       blue: "rgba(54, 162, 235)",

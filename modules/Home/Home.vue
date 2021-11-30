@@ -22,7 +22,7 @@ export default {
   },
 };
 </script>
-<style module>
+<style lang="scss" module>
 .container {
   margin-top: 40px;
   min-height: 100vh;
@@ -30,9 +30,8 @@ export default {
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
-}
-@media screen and (max-width: 1200px) {
-  .container {
+
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
     row-gap: 100px;
     margin: 80px 0 60px;
