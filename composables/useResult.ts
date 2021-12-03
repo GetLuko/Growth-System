@@ -1,28 +1,29 @@
 import { computed } from "vue";
 import { useLadderInfo } from "./useLadderInfo";
-import { pipe, flatMap, map, reduce, find } from "@fxts/core";
+import { pipe, flatMap, map, reduce, filter, last, toArray } from "@fxts/core";
 
 const milestoneToPoint = [0, 1, 3, 6, 12, 20];
-const pointToLevel = {
-  0: "3.1",
-  4: "3.2",
-  9: "3.3",
-  14: "4.1",
-  19: "4.2",
-  24: "4.3",
-  31: "5.1",
-  38: "5.2",
-  45: "5.3",
-  54: "6.1",
-  63: "6.2",
-  72: "6.3",
-  84: "7.1",
-  96: "7.2",
-  108: "7.3",
-  123: "8.1",
-  138: "8.2",
-  153: "8.3",
-};
+const pointToLevel = [
+  { point: 0, level: "3.1" },
+  { point: 4, level: "3.2" },
+  { point: 9, level: "3.3" },
+  { point: 14, level: "4.1" },
+  { point: 19, level: "4.2" },
+  { point: 24, level: "4.3" },
+  { point: 31, level: "5.1" },
+  { point: 38, level: "5.2" },
+  { point: 45, level: "5.3" },
+  { point: 54, level: "6.1" },
+  { point: 63, level: "6.2" },
+  { point: 72, level: "6.3" },
+  { point: 84, level: "7.1" },
+  { point: 96, level: "7.2" },
+  { point: 108, level: "7.3" },
+  { point: 123, level: "8.1" },
+  { point: 138, level: "8.2" },
+  { point: 153, level: "8.3" },
+];
+
 const levelToTitle = {
   "3": "Engineer I",
   "4": "Engineer II",
@@ -48,9 +49,9 @@ export const useResult = () => {
   const level = computed(() => {
     return pipe(
       pointToLevel,
-      Object.keys,
-      find((levelPoint) => parseInt(levelPoint) >= points.value),
-      (levelPoint) => pointToLevel[levelPoint],
+      filter((obj) => points.value >= obj.point),
+      last,
+      (last) => last.level,
     );
   });
 
