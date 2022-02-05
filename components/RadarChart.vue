@@ -108,6 +108,7 @@ export default {
               onDragEnd: function (e, datasetIndex, index, value) {
                 e.target.style.cursor = "default";
                 ladderInfo.value[props.title][labels[index]] = value;
+                history.pushState("", "", `?m=${btoa(JSON.stringify(ladderInfo.value))}`)
               },
               magnet: {
                 to: Math.round, // to: (value) => value + 5
