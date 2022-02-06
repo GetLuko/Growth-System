@@ -34,8 +34,22 @@ const init = {
 };
 
 export const useLadderInfo = () => {
-  const ladderInfo = useState<ILadderInfo>("LadderInfo", () => init);
+  const ladderInfo = useState<ILadderInfo>("LadderInfo", () => {
+    try {
+      return JSON.parse(atob(location.search.replace('?m=', '')))
+    } catch(err) {
+      return init
+    }
+  });
   const chartId = useState<number>(("graphId", () => Date.now()));
+
+  window.onpopstate = function(event) {
+    try {
+      ladderInfo.value = JSON.parse(atob(event.target.location.search.replace('?m=', '')))
+      chartId.value = Date.now();
+    } catch(err) {
+    }
+  }
 
   const reader = new FileReader();
   reader.onload = (e: any) => {
