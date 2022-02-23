@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import { useLadderInfo } from "./useLadderInfo";
-import { pipe, flatMap, map, reduce, filter, last, toArray } from "@fxts/core";
+import { pipe, flatMap, map, reduce, filter, last, values } from "@fxts/core";
 
 const milestoneToPoint = [0, 1, 3, 6, 12, 20];
 const pointToLevel = [
@@ -39,8 +39,8 @@ export const useResult = () => {
   const points = computed(() => {
     return pipe(
       ladderInfo.value,
-      Object.values,
-      flatMap(Object.values),
+      values,
+      flatMap(values),
       map((milestone) => milestoneToPoint[milestone]),
       reduce((a, b) => a + b),
     );

@@ -262,10 +262,10 @@
   dependencies:
     mime "^3.0.0"
 
-"@fxts/core@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@fxts/core/-/core-0.2.1.tgz#dd958dbacc6e1d00ca608383b81c1ac130c68fbc"
-  integrity sha512-BQPadC2mp0SRy3RA8Gpx3P7sfqw2RtspU0LiNFV3WbR34O+7jXpMz0wuejSOCIXcs+Yq5bnCptkfhlFU/pTdiw==
+"@fxts/core@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@fxts/core/-/core-0.5.0.tgz#9a820fd42054e6438f690e441afe31502ae66301"
+  integrity sha512-iWI5c+MHjPI3RdGMw5WwxrWHJaALkauPQynTrGC8qBGtb7OxyRxvSUzD71LP/jtLQ+12kl7pj1DBPkCG+tVYEg==
   dependencies:
     tslib "^2.3.1"
 
