@@ -7,7 +7,6 @@ const init = {
     Hardware: 0,
     Mobile: 0,
     DataEngineering: 0,
-    DataAnalytics: 0,
     Ops: 0,
     Backend: 0,
     Firmware: 0,
@@ -36,20 +35,21 @@ const init = {
 export const useLadderInfo = () => {
   const ladderInfo = useState<ILadderInfo>("LadderInfo", () => {
     try {
-      return JSON.parse(atob(location.search.replace('?m=', '')))
-    } catch(err) {
-      return init
+      return JSON.parse(atob(location.search.replace("?m=", "")));
+    } catch (err) {
+      return init;
     }
   });
-  const chartId = useState<number>(("graphId", () => Date.now()));
+  const chartId = useState<number>("graphId", () => Date.now());
 
-  window.onpopstate = function(event) {
+  window.onpopstate = function (event) {
     try {
-      ladderInfo.value = JSON.parse(atob(event.target.location.search.replace('?m=', '')))
+      ladderInfo.value = JSON.parse(
+        atob(event.target.location.search.replace("?m=", "")),
+      );
       chartId.value = Date.now();
-    } catch(err) {
-    }
-  }
+    } catch (err) {}
+  };
 
   const reader = new FileReader();
   reader.onload = (e: any) => {
