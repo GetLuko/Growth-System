@@ -40,10 +40,10 @@ export default {
     );
     const ctx = ref(null);
     const colorMap = {
-      blue: "rgba(54, 162, 235)",
-      red: "rgba(255, 99, 132)",
-      green: "rgba(36, 176, 26)",
-      yellow: "rgba(199, 185, 38)",
+      blue: "rgba(88, 117, 236)",
+      red: "rgba(217, 87, 98)",
+      green: "rgba(85, 164, 151)",
+      yellow: "rgba(200, 157, 70)",
     };
     const color = colorMap[props.color] || colorMap["blue"];
     const labels = Object.keys(props.data);
@@ -122,7 +122,7 @@ export default {
               stepSize: 1,
               pointLabels: {
                 font: {
-                  size: 16,
+                  size: 14,
                 },
               },
             },
