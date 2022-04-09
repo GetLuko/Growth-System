@@ -1,0 +1,1 @@
+export { storeGrowthData } from "./storeGrowthData";

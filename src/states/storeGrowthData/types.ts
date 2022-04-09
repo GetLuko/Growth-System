@@ -28,3 +28,21 @@ export interface IGrowthData {
     Community: number;
   };
 }
+
+export interface ILevelPoint {
+  point: number;
+  level: string;
+}
+
+export enum LevelsEnum {
+  lv3 = "3",
+  lv4 = "4",
+  lv5 = "5",
+  lv6 = "6",
+  lv7 = "7",
+  lv8 = "8",
+}
+
+export type ILevelTitle = {
+  [key in LevelsEnum]: string;
+};
