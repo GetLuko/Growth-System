@@ -32,21 +32,21 @@ export const useGraph = () => {
   };
   let dataValues = [];
   let maxAxisValues = [];
-  let data = {
-    name: "Data Set",
-    color: null,
-    skills: [
-      { axis: "Node", value: 1, order: 0 },
-      { axis: "Data analysis", value: 1, order: 1 },
-      { axis: "Javascript", value: 2, order: 2 },
-      { axis: "HTML", value: 3, order: 3 },
-    ],
-  };
 
   function init(title, color) {
-    data.color = color;
+    const data = {
+      name: title.replace(" ", "-"),
+      skills: computed(() => {
+        return Object.entries(growthData.value[title]).map(([axis, value], idx) => ({
+          axis,
+          value: value + 1,
+          order: idx,
+        }));
+      }),
+      color: color,
+    };
 
-    var allAxis = data.skills.map(function (i, j) {
+    var allAxis = data.skills.value.map(function (i, j) {
       return i.axis;
     });
     var total = allAxis.length;
@@ -169,7 +169,7 @@ export const useGraph = () => {
     function initPolygon() {
       dataValues = [];
 
-      g.selectAll(".nodes").data(data.skills, function (j, i) {
+      g.selectAll(".nodes").data(data.skills.value, function (j, i) {
         dataValues.push([
           (cfg.w / 2) *
             (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
@@ -184,7 +184,7 @@ export const useGraph = () => {
         .data([dataValues])
         .enter()
         .append("polygon")
-        .attr("id", "radar-chart-area-" + data.name.replace(" ", "-"))
+        .attr("id", "radar-chart-area-" + data.title)
         .style("stroke-width", "2px")
         .style("stroke", data.color)
         .attr("points", function (d) {
@@ -203,6 +203,7 @@ export const useGraph = () => {
     function dragend(event, i) {
       move.call(this, event, i, true);
       g.selectAll(".node").remove();
+      growthData.value[title][i.axis] = i.value - 1;
       drawNode();
     }
 
@@ -285,7 +286,7 @@ export const useGraph = () => {
     function updatePoly(isSticky = false) {
       dataValues = [];
 
-      g.selectAll(".nodes").data(data.skills, function (j, i) {
+      g.selectAll(".nodes").data(data.skills.value, function (j, i) {
         dataValues.push([
           (cfg.w / 2) *
             (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
@@ -296,7 +297,7 @@ export const useGraph = () => {
 
       dataValues = [dataValues];
 
-      g.selectAll("#radar-chart-area-Data-Set")
+      g.selectAll(`#radar-chart-area-${data.title}`)
         .data(dataValues)
         .attr("points", function (d) {
           var str = "";
@@ -310,11 +311,11 @@ export const useGraph = () => {
     //Put circles on the polygon at inflection points
     function drawNode() {
       g.selectAll(".nodes")
-        .data(data.skills)
+        .data(data.skills.value)
         .enter()
         .append("svg:circle")
         .attr("class", "node")
-        .attr("id", "radar-chart-points-" + data.name.replace(" ", "-"))
+        .attr("id", "radar-chart-points-" + data.title)
         .attr("r", cfg.radius)
         .attr("alt", function (j) {
           return Math.max(j.value, 0);
