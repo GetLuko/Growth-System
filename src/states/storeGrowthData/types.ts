@@ -43,6 +43,13 @@ export enum LevelsEnum {
   lv8 = "8",
 }
 
+export enum ColorsEnum {
+  blue = "blue",
+  red = "red",
+  green = "green",
+  yellow = "yellow",
+}
+
 export type ILevelTitle = {
   [key in LevelsEnum]: string;
 };

@@ -1,14 +1,14 @@
-import { computed, toRaw } from "vue";
+import { computed } from "vue";
 import { pipe, flatMap, map, reduce, filter, last, values } from "@fxts/core";
-import { storeGrowthData } from "../states/storeGrowthData";
-import { LevelsEnum } from "../states/storeGrowthData/types";
+import { storeGrowthData } from "@/states/storeGrowthData";
+import { LevelsEnum } from "@/states/storeGrowthData/types";
 
 const { growthData, milestoneToPoint, pointToLevel, levelToTitle } = storeGrowthData();
 
 export const useGrowthData = () => {
   const points = computed(() =>
     pipe(
-      toRaw(growthData.value),
+      growthData.value,
       values,
       flatMap(values),
       map((milestone) => milestoneToPoint[milestone]),

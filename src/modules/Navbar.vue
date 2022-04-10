@@ -25,8 +25,8 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useGrowthData } from "../composables/useGrowthData";
-import { useIO } from "../composables/useIO";
+import { useGrowthData } from "@/composables/useGrowthData";
+import { useIO } from "@/composables/useIO";
 
 const inputTag = ref<HTMLElement | null>(null);
 const { points, level, title } = useGrowthData();

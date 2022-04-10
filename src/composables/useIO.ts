@@ -1,11 +1,11 @@
-import { storeGrowthData } from "../states/storeGrowthData";
+import { storeGrowthData } from "@/states/storeGrowthData";
 import { toRaw } from "vue";
 import { pipe } from "@fxts/core";
 import { useRouter } from "vue-router";
-import { storeGraph } from "../states/storeGraph";
+import { useGraph } from "./useGraph";
 
 const { growthData } = storeGrowthData();
-const { graphId } = storeGraph();
+const { graphId } = useGraph();
 const reader = new FileReader();
 
 reader.onload = (e: any) => {

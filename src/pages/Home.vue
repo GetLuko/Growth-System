@@ -1,22 +1,24 @@
 <template>
   <div :class="$style.container" :key="graphId">
     <div v-for="(key, index) in Object.keys(growthData)" :key="index">
-      <RadarChart :data="growthData[key]" :title="key" :color="colors[index]" :class="$style.chart" />
+      <RadarChart :title="key" :color="colors[index]" :class="$style.chart" />
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import RadarChart from "@/modules/RadarChart.vue";
-import { storeGraph } from "../states/storeGraph";
-import { storeGrowthData } from "../states/storeGrowthData";
 
-const { graphId } = storeGraph();
+<script setup lang="ts">
+import RadarChart from "@/modules/RadarChart";
+import { storeGrowthData } from "@/states/storeGrowthData";
+import { useGraph } from "@/composables/useGraph";
+
+const { graphId } = useGraph();
 const { growthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
 </script>
+
 <style lang="scss" module>
 .container {
-  margin-top: 80px;
+  margin-top: 120px;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
