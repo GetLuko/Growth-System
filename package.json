@@ -11,6 +11,8 @@
     "@fxts/core": "^0.5.0",
     "d3": "^7.4.3",
     "minireset.css": "^0.0.7",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.12.4",
     "vue": "^3.2.25",
     "vue-router": "4",
     "vue-router-multiguard": "^1.0.3"

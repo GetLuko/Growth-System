@@ -3,8 +3,8 @@
     <div :class="$style.left">
       <div :class="$style.logo">Growth System</div>
       <nav :class="$style.menus">
-        <button :class="[$style.menu, $style['menu-cta']]" @click="onImport">Import</button>
-        <button :class="[$style.menu, $style['menu-link']]" @click="onExport">Export</button>
+        <Button @click="onImport">Import</Button>
+        <Button @click="onExport" class="p-button-secondary">Export</Button>
       </nav>
       <input
         ref="inputTag"
@@ -47,7 +47,6 @@ const onExport = () => exportToFile();
 </script>
 
 <style lang="scss" module>
-@import "@/assets/colors";
 .container {
   display: flex;
   justify-content: space-between;
@@ -70,42 +69,6 @@ const onExport = () => exportToFile();
 .right {
   display: flex;
   align-items: center;
-}
-.menu {
-  padding: 8px 16px;
-  cursor: pointer;
-  border: 0;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.menu-cta {
-  border-radius: 8px;
-  background-color: $bluko-500;
-  color: $white;
-  margin-right: 8px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: $bluko-400;
-  }
-}
-
-.menu-link {
-  border-radius: 8px;
-  background-color: transparent;
-  color: $bluko-1000;
-  transition: color 0.3s;
-
-  &:hover {
-    color: $gray-700;
-  }
 }
 
 .info {

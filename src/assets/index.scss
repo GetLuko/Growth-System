@@ -1,4 +1,3 @@
-@import "node_modules/minireset.css/minireset.sass";
 @import "colors";
 @import "typo";
 
@@ -15,21 +14,4 @@ $fontFiles: (
     font-display: swap;
     src: url(#{$fontFile}) format("opentype");
   }
-}
-
-html {
-  color: $gray-1000;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  background: $white;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  -webkit-font-feature-settings: "liga" off;
-  font-feature-settings: "liga" off;
-}
-
-* {
-  font-family: Circular, Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif;
-  line-height: 1.5;
 }
