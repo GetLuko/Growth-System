@@ -1,8 +1,8 @@
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { toRaw } from "vue";
 import { pipe } from "@fxts/core";
-import { useRouter } from "vue-router";
-import { useGraph } from "./useGraph";
+import { LocationQueryValue, useRouter } from "vue-router";
+import { useGraph } from "@/composables/useGraph";
 
 const { growthData } = storeGrowthData();
 const { graphId } = useGraph();
@@ -23,9 +23,9 @@ export const useIO = () => {
   const router = useRouter();
 
   return {
-    importFromURL: () => {
+    importFromURL: (queryValue: string) => {
       try {
-        pipe(window.location.search.replace("?m=", ""), atob, JSON.parse, (data) => (growthData.value = data));
+        pipe(queryValue, atob, JSON.parse, (data) => (growthData.value = data));
       } catch (error) {}
     },
     exportToURL: () =>

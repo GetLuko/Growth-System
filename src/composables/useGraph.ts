@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { pipe, range, map, each } from "@fxts/core";
 import { ref, computed } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 
@@ -30,10 +29,10 @@ export const useGraph = () => {
     ExtraWidthY: 150,
     duration: 200,
   };
-  let dataValues = [];
-  let maxAxisValues = [];
+  let dataValues: any[] = [];
+  let maxAxisValues: any[] = [];
 
-  function init(title, color) {
+  function init(title: string, color: string) {
     const data = {
       name: title.replace(" ", "-"),
       skills: computed(() => {
@@ -170,7 +169,7 @@ export const useGraph = () => {
       dataValues = [];
 
       g.selectAll(".nodes").data(data.skills.value, function (j, i) {
-        dataValues.push([
+        return dataValues.push([
           (cfg.w / 2) *
             (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
           (cfg.h / 2) *
