@@ -337,6 +337,12 @@ export const useGraph = () => {
         .style("fill-opacity", 0.75)
         .style("z-index", 12)
         .style("cursor", "pointer")
+        .on("mouseover", function (event, i) {
+          event.target.setAttribute("r", cfg.radius + 4);
+        })
+        .on("mouseout", function (event, i) {
+          event.target.setAttribute("r", cfg.radius);
+        })
         .call(d3.drag().on("drag", move).on("end", dragend));
     }
   }
