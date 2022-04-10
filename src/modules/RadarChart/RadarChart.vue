@@ -1,5 +1,8 @@
 <template>
-  <div :id="title" :key="graphId"></div>
+  <section>
+    <h2 :class="$style.title">{{ title }}</h2>
+    <div :id="title" :key="graphId"></div>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -28,3 +31,9 @@ onMounted(() => {
   init(props.title, color);
 });
 </script>
+<style lang="scss" module>
+.title {
+  @include typo-large-title;
+  text-align: center;
+}
+</style>
