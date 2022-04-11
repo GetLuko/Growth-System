@@ -1,7 +1,9 @@
 import * as d3 from "d3";
 import { ref, computed } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
+import { useWindowSize } from "@vueuse/core";
 
+const { width: windowWidth } = useWindowSize();
 const { growthData } = storeGrowthData();
 const graphId = ref(Date.now());
 const colorMap = {
@@ -13,8 +15,8 @@ const colorMap = {
 
 export const useGraph = () => {
   const cfg = {
-    w: 580,
-    h: 580,
+    w: windowWidth.value > 580 ? 580 : windowWidth.value - 20,
+    h: windowWidth.value > 580 ? 580 : windowWidth.value - 20,
     maxValue: 6,
     levels: 6,
     opacityArea: 0.2,
@@ -23,10 +25,10 @@ export const useGraph = () => {
     factor: 1,
     factorLegend: 0.8,
     ToRight: 0,
-    TranslateX: 40,
-    TranslateY: 40,
-    ExtraWidthX: 80,
-    ExtraWidthY: 150,
+    TranslateX: 0,
+    TranslateY: 0,
+    ExtraWidthX: 0,
+    ExtraWidthY: 0,
     duration: 200,
   };
   let dataValues: any[] = [];

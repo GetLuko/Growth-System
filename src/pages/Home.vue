@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container" :key="graphId">
-    <div v-for="(key, index) in Object.keys(growthData)" :key="index">
-      <RadarChart :title="key" :color="colors[index]" :class="$style.chart" />
+    <div v-for="(title, index) in Object.keys(growthData)" :key="index">
+      <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
     </div>
   </div>
 </template>
@@ -24,10 +24,10 @@ const colors = ["blue", "red", "green", "yellow"];
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
+  row-gap: 100px;
 
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
-    row-gap: 100px;
     margin: 80px 0 60px;
   }
 }
