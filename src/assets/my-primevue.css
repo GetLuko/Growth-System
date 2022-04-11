@@ -4820,7 +4820,7 @@
 
 .p-menubar {
   padding: 0.5rem 1rem;
-  background: #efefef;
+  background: white;
   color: rgba(0, 0, 0, 0.9);
   border: 0 none;
   border-radius: var(--border-radius);

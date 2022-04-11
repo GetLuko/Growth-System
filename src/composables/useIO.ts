@@ -20,16 +20,13 @@ reader.onload = (e: any) => {
 };
 
 export const useIO = () => {
-  const router = useRouter();
-
   return {
     importFromURL: (queryValue: string) => {
       try {
         pipe(queryValue, atob, JSON.parse, (data) => (growthData.value = data));
       } catch (error) {}
     },
-    exportToURL: () =>
-      pipe(toRaw(growthData.value), JSON.stringify, btoa, (encodedData) => router.push({ query: { m: encodedData } })),
+    exportToBase64: () => pipe(toRaw(growthData.value), JSON.stringify, btoa),
     importFromFile: (file: Blob) => pipe(file, (file) => reader.readAsText(file)),
     exportToFile: () => {
       try {

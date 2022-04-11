@@ -5,6 +5,9 @@ import multiguard from "vue-router-multiguard";
 import App from "./App.vue";
 import PrimeVue from "primevue/config";
 import Button from "primevue/button";
+import Menubar from "primevue/menubar";
+import Toast from "primevue/toast";
+import ToastService from "primevue/toastservice";
 
 import "minireset.css/minireset.min.css";
 import "@/assets/my-primevue.css";
@@ -15,7 +18,10 @@ const app = createApp(App);
 router.beforeEach(multiguard(guards));
 
 app.use(PrimeVue);
+app.use(ToastService);
 app.component("Button", Button);
+app.component("Menubar", Menubar);
+app.component("Toast", Toast);
 app.use(router);
 app.mount("#app");
 

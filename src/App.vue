@@ -1,6 +1,7 @@
 <template>
   <Navbar :class="$style.navbar" />
   <router-view></router-view>
+  <Toast />
 </template>
 
 <script setup lang="ts">
