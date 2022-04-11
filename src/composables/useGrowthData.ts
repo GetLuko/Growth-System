@@ -1,7 +1,7 @@
 import { computed, watch } from "vue";
 import { pipe, flatMap, map, reduce, filter, last, values } from "@fxts/core";
 import { storeGrowthData } from "@/states/storeGrowthData";
-import { LevelsEnum } from "@/states/storeGrowthData/types";
+import { ILevelTitle, LevelsEnum } from "@/states/storeGrowthData/types";
 
 const { growthData, milestoneToPoint, pointToLevel, levelToTitle } = storeGrowthData();
 
@@ -27,8 +27,7 @@ export const useGrowthData = () => {
 
   const title = computed(() => {
     const lv = level.value.match(/^\d*/);
-
-    return lv && lv[0] in LevelsEnum ? levelToTitle[lv[0] as LevelsEnum] : levelToTitle[LevelsEnum.lv3];
+    return lv ? levelToTitle[lv[0] as LevelsEnum] : levelToTitle[LevelsEnum.lv3];
   });
 
   return { points, level, title };
