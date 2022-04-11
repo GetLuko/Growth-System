@@ -33,5 +33,6 @@ onMounted(() => {
 .title {
   @include typo-large-title;
   text-align: center;
+  margin-bottom: 20px;
 }
 </style>

@@ -20,7 +20,7 @@ const colors = ["blue", "red", "green", "yellow"];
 
 <style lang="scss" module>
 .container {
-  margin-top: 120px;
+  margin: 120px 0 60px;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -23,7 +23,7 @@ export const useGraph = () => {
     radius: 10,
     radians: 2 * Math.PI,
     factor: 1,
-    factorLegend: 0.8,
+    factorLegend: 0.6,
     ToRight: 0,
     TranslateX: 0,
     TranslateY: 0,
