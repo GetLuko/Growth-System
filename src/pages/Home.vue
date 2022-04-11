@@ -30,7 +30,7 @@ const colors = ["blue", "red", "green", "yellow"];
 
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
-    margin: 80px 0 60px;
+    margin: 120px 0 120px;
   }
 }
 </style>

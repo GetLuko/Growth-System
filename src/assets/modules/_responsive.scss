@@ -1,0 +1,38 @@
+$breakpoints: (
+  "xsmall": 540px,
+  "small": 720px,
+  "medium": 960px,
+  "large": 1280px,
+);
+
+/*
+** Above
+** Usage example: `@include above(small) { background: blue; }`
+*/
+
+@mixin above($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+/*
+** Below
+** Usage example: `@include below(small) { background: blue; }`
+*/
+
+@mixin below($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}

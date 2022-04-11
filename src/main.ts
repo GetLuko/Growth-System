@@ -11,6 +11,7 @@ import ToastService from "primevue/toastservice";
 
 import "minireset.css/minireset.min.css";
 import "@/assets/my-primevue.css";
+import "@/assets/fonts.scss";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
