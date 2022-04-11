@@ -1,8 +1,10 @@
 import * as d3 from "d3";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
+import { useDark } from "@vueuse/core";
 
+const isDark = useDark();
 const { width: windowWidth } = useWindowSize();
 const { growthData } = storeGrowthData();
 
@@ -25,10 +27,10 @@ export const useGraph = () => {
     factor: 1,
     factorLegend: 0.6,
     ToRight: 0,
-    TranslateX: 0,
-    TranslateY: 0,
-    ExtraWidthX: 0,
-    ExtraWidthY: 0,
+    TranslateX: 15,
+    TranslateY: 15,
+    ExtraWidthX: 30,
+    ExtraWidthY: 30,
     duration: 200,
   };
   let dataValues: any[] = [];
@@ -102,7 +104,7 @@ export const useGraph = () => {
         })
         .attr("class", "skill-value")
         .style("font-family", "Circular")
-        .style("font-size", "10px")
+        .style("font-size", "12px")
         .attr(
           "transform",
           "translate(" + (cfg.w / 2 - levelFactor + cfg.ToRight) + ", " + (cfg.h / 2 - levelFactor) + ")",

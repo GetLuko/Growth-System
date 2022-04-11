@@ -1,10 +1,17 @@
 <template>
   <Menubar :model="navItems" :class="$style.navbar">
     <template #start>
-      <div :class="$style.logo">Growth System</div>
+      <div :class="$style.logo" class="logo">Growth System</div>
     </template>
     <template #end>
-      <ResultBar :points="points" :level="level" :title="title" :class="$style.navResult" />
+      <div :class="$style.rightNav">
+        <ResultBar :points="points" :level="level" :title="title" :class="$style.navResult" class="resultBar" />
+        <div :class="$style.switch">
+          <i class="pi pi-sun"></i>
+          <InputSwitch v-model="isDark" />
+          <i class="pi pi-moon"></i>
+        </div>
+      </div>
       <input
         ref="inputTag"
         type="file"
@@ -16,7 +23,7 @@
       />
     </template>
   </Menubar>
-  <ResultBar :points="points" :level="level" :title="title" :class="$style.bottomResult" />
+  <ResultBar :points="points" :level="level" :title="title" :class="$style.bottomResult" class="resultBar" />
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
@@ -25,6 +32,7 @@ import { useIO } from "@/composables/useIO";
 import { useClipboard } from "@vueuse/core";
 import { useToast } from "primevue/usetoast";
 import ResultBar from "@/components/ResultBar";
+import { useDark, useToggle } from "@vueuse/core";
 
 const inputTag = ref<HTMLElement | null>(null);
 const { points, level, title } = useGrowthData();
@@ -32,6 +40,7 @@ const { exportToFile, exportToBase64, importFromFile } = useIO();
 const exportedURL = ref<string>("");
 const toast = useToast();
 const { copy } = useClipboard({ source: exportedURL });
+const isDark = useDark();
 
 const onImport = () => {
   inputTag.value?.click();
@@ -112,6 +121,17 @@ const navItems = ref([
   @include above(xsmall) {
     display: none;
   }
+}
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rightNav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .hide {

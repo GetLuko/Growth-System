@@ -1,0 +1,51 @@
+$fontFiles: (
+  400: "@/assets/CircularXX-Medium.otf",
+  600: "@/assets/CircularXX-Bold.otf",
+  800: "@/assets/CircularXX-Book.otf",
+);
+
+@each $fontWeight, $fontFile in $fontFiles {
+  @font-face {
+    font-weight: $fontWeight;
+    font-family: Circular;
+    font-display: swap;
+    src: url(#{$fontFile}) format("opentype");
+  }
+}
+
+// dark theme
+.dark {
+  background-color: #212121;
+  color: white;
+  .p-menubar {
+    background-color: rgb(46, 47, 63);
+  }
+  .p-menubar-root-list,
+  .p-submenu-list {
+    background-color: rgb(49, 50, 68);
+  }
+  .p-menuitem-text,
+  .p-menuitem-icon,
+  .p-submenu-icon {
+    color: white !important;
+  }
+  .p-menuitem-link:not(.p-disabled):hover {
+    background-color: rgb(57, 59, 83) !important;
+  }
+  svg {
+    fill: white;
+  }
+  line {
+    stroke: rgb(189, 189, 189) !important;
+  }
+  i {
+    color: white;
+  }
+
+  .logo {
+    color: rgb(129, 156, 216);
+  }
+  .resultBar {
+    background-color: rgb(46, 47, 63);
+  }
+}
