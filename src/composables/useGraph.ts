@@ -17,8 +17,8 @@ const colorMap = {
 
 export const useGraph = () => {
   const cfg = {
-    w: windowWidth.value > 580 ? 580 : windowWidth.value - 20,
-    h: windowWidth.value > 580 ? 580 : windowWidth.value - 20,
+    w: windowWidth.value > 570 ? 570 : windowWidth.value - 30,
+    h: windowWidth.value > 570 ? 570 : windowWidth.value - 30,
     maxValue: 6,
     levels: 6,
     opacityArea: 0.2,
