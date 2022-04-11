@@ -5,7 +5,7 @@ import { useWindowSize } from "@vueuse/core";
 
 const { width: windowWidth } = useWindowSize();
 const { growthData } = storeGrowthData();
-const graphId = ref(Date.now());
+
 const colorMap = {
   blue: "rgba(88, 117, 236)",
   red: "rgba(217, 87, 98)",
@@ -351,6 +351,5 @@ export const useGraph = () => {
   return {
     init,
     colorMap,
-    graphId,
   };
 };

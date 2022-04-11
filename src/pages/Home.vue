@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.container" :key="graphId">
+  <div :class="$style.container" :key="windowWidth">
     <div v-for="(title, index) in Object.keys(growthData)" :key="index">
       <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
     </div>
@@ -8,10 +8,12 @@
 
 <script setup lang="ts">
 import RadarChart from "@/modules/RadarChart";
-import { storeGrowthData } from "@/states/storeGrowthData";
-import { useGraph } from "@/composables/useGraph";
 
-const { graphId } = useGraph();
+import { storeGrowthData } from "@/states/storeGrowthData";
+import { useWindowSize } from "@vueuse/core";
+
+const { width: windowWidth } = useWindowSize();
+
 const { growthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
 </script>

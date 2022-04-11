@@ -1,18 +1,16 @@
 <template>
   <section>
     <h2 :class="$style.title">{{ title }}</h2>
-    <div :id="title" :key="graphId"></div>
+    <div :id="title"></div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, PropType, computed } from "vue";
-import { storeGrowthData } from "@/states/storeGrowthData";
+import { onMounted, PropType } from "vue";
 import { ColorsEnum } from "@/states/storeGrowthData/types";
 import { useGraph } from "@/composables/useGraph";
 
-const { growthData } = storeGrowthData();
-const { init, colorMap, graphId } = useGraph();
+const { init, colorMap } = useGraph();
 
 const props = defineProps({
   title: {
