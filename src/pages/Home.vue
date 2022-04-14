@@ -23,6 +23,8 @@ $navbar-height: 64px;
 $result-bar-height: 50px;
 
 .container {
+  margin-top: $navbar-height;
+  overflow-x: hidden;
   height: calc(100vh - $navbar-height);
   display: grid;
   grid-template-columns: 1fr 1fr;
