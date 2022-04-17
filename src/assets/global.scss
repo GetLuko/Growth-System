@@ -17,12 +17,10 @@ $fontFiles: (
 .dark {
   background-color: #212121;
   color: white;
-  .p-menubar {
-    background-color: rgb(46, 47, 63);
-  }
+  .p-menubar,
   .p-menubar-root-list,
   .p-submenu-list {
-    background-color: rgb(49, 50, 68);
+    background-color: rgb(46, 47, 63);
   }
   .p-menuitem-text,
   .p-menuitem-icon,
@@ -30,6 +28,9 @@ $fontFiles: (
     color: white !important;
   }
   .p-menuitem-link:not(.p-disabled):hover {
+    background-color: rgb(57, 59, 83) !important;
+  }
+  .p-menuitem-active > .p-menuitem-link {
     background-color: rgb(57, 59, 83) !important;
   }
   svg {
