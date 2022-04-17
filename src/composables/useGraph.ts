@@ -2,9 +2,7 @@ import * as d3 from "d3";
 import { computed } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
-import { useDark } from "@vueuse/core";
 
-const isDark = useDark();
 const { width: windowWidth } = useWindowSize();
 const { growthData } = storeGrowthData();
 
@@ -31,7 +29,6 @@ export const useGraph = () => {
     TranslateY: 15,
     ExtraWidthX: 30,
     ExtraWidthY: 30,
-    duration: 200,
   };
   let dataValues: any[] = [];
   let maxAxisValues: any[] = [];
@@ -283,10 +280,10 @@ export const useGraph = () => {
         }
         dragTarget.on("drag", null);
       }
-      updatePoly(isSticky);
+      updatePoly();
     }
 
-    function updatePoly(isSticky = false) {
+    function updatePoly() {
       dataValues = [];
 
       g.selectAll(".nodes").data(data.skills.value, function (j, i) {
