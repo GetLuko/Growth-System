@@ -3,12 +3,20 @@
     <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
       <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
     </div>
+    <ToggleButton
+      v-model="isCompareMode"
+      on-label="Compare ON"
+      off-label="Compare OFF"
+      :class="$style.compareModeButton"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import RadarChart from "@/modules/RadarChart";
-
+import ToggleButton from "primevue/togglebutton";
+import SpeedDial from "primevue/SpeedDial";
+import { ref } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
 import { useGraph } from "@/composables/useGraph";
@@ -18,6 +26,7 @@ const { graphId } = useGraph();
 
 const { growthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
+const isCompareMode = ref(false);
 </script>
 
 <style lang="scss" module>
@@ -51,5 +60,10 @@ $result-bar-height: 50px;
   @include below(xsmall) {
     height: calc(100vh - $navbar-height - $result-bar-height);
   }
+}
+.compareModeButton {
+  position: fixed !important;
+  left: 40px;
+  bottom: 40px;
 }
 </style>
