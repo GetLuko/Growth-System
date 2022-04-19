@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container" :key="windowWidth">
-    <div v-for="(title, index) in Object.keys(growthData)" :key="index" :class="$style.item">
+    <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
       <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
     </div>
   </div>
@@ -11,8 +11,10 @@ import RadarChart from "@/modules/RadarChart";
 
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
+import { useGraph } from "@/composables/useGraph";
 
 const { width: windowWidth } = useWindowSize();
+const { graphId } = useGraph();
 
 const { growthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
