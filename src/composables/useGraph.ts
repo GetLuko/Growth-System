@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
 
@@ -12,6 +12,8 @@ const colorMap = {
   green: "rgba(85, 164, 151)",
   yellow: "rgba(200, 157, 70)",
 };
+
+const graphId = ref(Date.now());
 
 export const useGraph = () => {
   const cfg = {
@@ -350,5 +352,6 @@ export const useGraph = () => {
   return {
     init,
     colorMap,
+    graphId,
   };
 };
