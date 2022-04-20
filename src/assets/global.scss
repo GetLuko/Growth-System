@@ -33,6 +33,33 @@ $fontFiles: (
   .p-menuitem-active > .p-menuitem-link {
     background-color: rgb(57, 59, 83) !important;
   }
+  // dialog
+  .p-dialog-header {
+    border-bottom: 1px solid #3c3f41;
+  }
+  .p-dialog-footer {
+    border-top: 1px solid #3c3f41;
+  }
+  .p-dialog-header,
+  .p-dialog-content,
+  .p-dialog-footer {
+    background-color: rgb(35, 36, 48);
+    color: white;
+  }
+  .p-inputtext {
+    background-color: rgb(32, 34, 46);
+    border: 1px solid #3c3f41;
+    color: white;
+  }
+  .p-inputtext:hover {
+    border: 1px solid #53585c;
+  }
+  .p-button.p-button-text {
+    color: #b2badb;
+  }
+  .p-button.p-button-text:enabled:hover {
+    color: #c3cbee;
+  }
   svg {
     fill: white;
   }

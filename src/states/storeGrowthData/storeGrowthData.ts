@@ -32,6 +32,8 @@ const growthData = ref<IGrowthData>({
   },
 });
 
+const otherGrowthData = ref<IGrowthData | null>(null);
+
 const pointToLevel: Array<ILevelPoint> = [
   { point: 0, level: "3.1" },
   { point: 4, level: "3.2" },
@@ -65,6 +67,7 @@ const levelToTitle: ILevelTitle = {
 export const storeGrowthData = () => {
   return {
     growthData,
+    otherGrowthData,
     milestoneToPoint: [0, 1, 3, 6, 12, 20],
     pointToLevel,
     levelToTitle,
