@@ -3,7 +3,7 @@ import { pipe, flatMap, map, reduce, filter, last, values } from "@fxts/core";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { ILevelTitle, LevelsEnum } from "@/states/storeGrowthData/types";
 
-const { growthData, milestoneToPoint, pointToLevel, levelToTitle } = storeGrowthData();
+const { growthData, otherGrowthData, milestoneToPoint, pointToLevel, levelToTitle } = storeGrowthData();
 
 export const useGrowthData = () => {
   const points = computed(() =>
@@ -30,5 +30,8 @@ export const useGrowthData = () => {
     return lv ? levelToTitle[lv[0] as LevelsEnum] : levelToTitle[LevelsEnum.lv3];
   });
 
-  return { points, level, title };
+  const cleanOtherGrowthData = () => {
+    otherGrowthData.value = null;
+  };
+  return { points, level, title, cleanOtherGrowthData };
 };

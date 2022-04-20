@@ -58,7 +58,11 @@ import FileUpload from "primevue/fileupload";
 import InputText from "primevue/inputtext";
 import { useIO } from "@/composables/useIO";
 import { GrowthDataTypeEnums } from "@/states/storeGrowthData/types";
+import { useGraph } from "@/composables/useGraph";
+import { useGrowthData } from "@/composables/useGrowthData";
 
+const { cleanOtherGrowthData } = useGrowthData();
+const { graphId } = useGraph();
 const isCompareMode = ref(false);
 const isVisible = ref(false);
 const { importFromURL, importFromFile } = useIO();
@@ -85,6 +89,10 @@ const onCancel = () => {
   // turn off compare mode
   isCompareMode.value = false;
 
+  // update graph
+  cleanOtherGrowthData();
+  graphId.value = Date.now();
+
   // close popup
   isVisible.value = false;
 
@@ -97,6 +105,7 @@ const onSubmit = () => {
   if (link.value) importFromURL(link.value, GrowthDataTypeEnums.other);
   else if (fileInput.value) importFromFile(fileInput.value.files[0], GrowthDataTypeEnums.other);
 
+  graphId.value = Date.now();
   // turn on compare mode
   isCompareMode.value = true;
 

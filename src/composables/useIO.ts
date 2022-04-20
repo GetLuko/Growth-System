@@ -34,14 +34,14 @@ export const useIO = () => {
 
   return {
     importFromQuery,
-    importFromURL: (urlString: string, type: GrowthDataTypeEnums | undefined) => {
+    importFromURL: (urlString: string, type: GrowthDataTypeEnums = GrowthDataTypeEnums.mine) => {
       const url = new URL(urlString);
       importFromQuery(url.searchParams.get("m"), type);
     },
     exportToBase64: () => pipe(toRaw(growthData.value), JSON.stringify, btoa),
-    importFromFile: (file: Blob, type: GrowthDataTypeEnums | undefined) =>
+    importFromFile: (file: Blob, type: GrowthDataTypeEnums = GrowthDataTypeEnums.mine) =>
       pipe(file, (file) =>
-        !type || type === GrowthDataTypeEnums.mine ? reader.readAsText(file) : otherReader.readAsText(file),
+        type === GrowthDataTypeEnums.mine ? reader.readAsText(file) : otherReader.readAsText(file),
       ),
     exportToFile: () => {
       try {
