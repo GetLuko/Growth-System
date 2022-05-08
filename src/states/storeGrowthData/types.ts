@@ -53,3 +53,8 @@ export enum ColorsEnum {
 export type ILevelTitle = {
   [key in LevelsEnum]: string;
 };
+
+export enum GrowthDataTypeEnums {
+  mine = "mine",
+  other = "other",
+}

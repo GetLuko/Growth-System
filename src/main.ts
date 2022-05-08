@@ -9,6 +9,7 @@ import Menubar from "primevue/menubar";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
 import InputSwitch from "primevue/inputswitch";
+import Dialog from "primevue/dialog";
 
 import "minireset.css/minireset.min.css";
 import "@/assets/my-primevue.css";
@@ -24,6 +25,7 @@ app.use(ToastService);
 app.component("Button", Button);
 app.component("Menubar", Menubar);
 app.component("Toast", Toast);
+app.component("Dialog", Dialog);
 app.component("InputSwitch", InputSwitch);
 app.use(router);
 app.mount("#app");

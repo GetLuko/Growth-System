@@ -4,15 +4,13 @@ import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
 
 const { width: windowWidth } = useWindowSize();
-const { growthData } = storeGrowthData();
-
+const { growthData, otherGrowthData } = storeGrowthData();
 const colorMap = {
   blue: "rgba(88, 117, 236)",
   red: "rgba(217, 87, 98)",
   green: "rgba(85, 164, 151)",
   yellow: "rgba(200, 157, 70)",
 };
-
 const graphId = ref(Date.now());
 
 export const useGraph = () => {
@@ -46,6 +44,17 @@ export const useGraph = () => {
         }));
       }),
       color: color,
+    };
+    const otherData = {
+      skills: computed(() => {
+        if (!otherGrowthData.value) return [];
+        return Object.entries(otherGrowthData.value[title]).map(([axis, value], idx) => ({
+          axis,
+          value: value + 1,
+          order: idx,
+        }));
+      }),
+      color: "gray",
     };
 
     var allAxis = data.skills.value.map(function (i, j) {
@@ -169,6 +178,41 @@ export const useGraph = () => {
 
     //Fill Areas
     function initPolygon() {
+      // otherDataValues
+      if (otherData.skills.value.length) {
+        var otherDataValues: any[] = [];
+
+        g.selectAll(".nodesOthers").data(otherData.skills.value, function (j, i) {
+          return otherDataValues.push([
+            (cfg.w / 2) *
+              (1 -
+                (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
+            (cfg.h / 2) *
+              (1 -
+                (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total)),
+          ]);
+        });
+        otherDataValues.push(otherDataValues[0]);
+
+        g.selectAll(".area2")
+          .data([otherDataValues])
+          .enter()
+          .append("polygon")
+          .style("stroke-width", "2px")
+          .style("stroke", "gray")
+          .attr("points", function (d) {
+            var str = "";
+            for (var pti = 0; pti < d.length; pti++) {
+              str = str + d[pti][0] + "," + d[pti][1] + " ";
+            }
+            return str;
+          })
+          .style("fill", function (j, i) {
+            return "gray";
+          })
+          .style("fill-opacity", cfg.opacityArea);
+      }
+
       dataValues = [];
 
       g.selectAll(".nodes").data(data.skills.value, function (j, i) {
@@ -179,14 +223,13 @@ export const useGraph = () => {
             (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total)),
         ]);
       });
-
       dataValues.push(dataValues[0]);
 
       g.selectAll(".area")
         .data([dataValues])
         .enter()
         .append("polygon")
-        .attr("id", "radar-chart-area-" + data.title)
+        .attr("id", "radar-chart-area-" + title)
         .style("stroke-width", "2px")
         .style("stroke", data.color)
         .attr("points", function (d) {
@@ -299,7 +342,7 @@ export const useGraph = () => {
 
       dataValues = [dataValues];
 
-      g.selectAll(`#radar-chart-area-${data.title}`)
+      g.selectAll(`#radar-chart-area-${title}`)
         .data(dataValues)
         .attr("points", function (d) {
           var str = "";

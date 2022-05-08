@@ -26,13 +26,14 @@
   <ResultBar :points="points" :level="level" :title="title" :class="$style.bottomResult" class="resultBar" />
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useGrowthData } from "@/composables/useGrowthData";
 import { useIO } from "@/composables/useIO";
 import { useClipboard } from "@vueuse/core";
 import { useToast } from "primevue/usetoast";
 import ResultBar from "@/components/ResultBar";
 import { useDark, useToggle } from "@vueuse/core";
+import { useGraph } from "@/composables/useGraph";
 
 const inputTag = ref<HTMLElement | null>(null);
 const { points, level, title } = useGrowthData();
@@ -41,7 +42,7 @@ const exportedURL = ref<string>("");
 const toast = useToast();
 const { copy } = useClipboard({ source: exportedURL });
 const isDark = useDark();
-
+const { graphId } = useGraph();
 const onImport = () => {
   inputTag.value?.click();
 };

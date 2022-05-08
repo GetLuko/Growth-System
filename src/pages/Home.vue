@@ -3,20 +3,21 @@
     <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
       <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
     </div>
+    <CompareMode />
   </div>
 </template>
 
 <script setup lang="ts">
 import RadarChart from "@/modules/RadarChart";
-
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
 import { useGraph } from "@/composables/useGraph";
+import CompareMode from "@/modules/CompareMode";
 
 const { width: windowWidth } = useWindowSize();
 const { graphId } = useGraph();
 
-const { growthData } = storeGrowthData();
+const { growthData, otherGrowthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
 </script>
 
