@@ -129,6 +129,16 @@ const onSubmit = () => {
     font-size: 25px;
     margin: 0 auto;
   }
+  @include below(xsmall) {
+    left: 15px;
+    bottom: 60px;
+    height: 50px !important;
+    width: 50px !important;
+  }
+  i {
+    font-size: 20px;
+    margin: 0 auto;
+  }
 }
 .seperator {
   margin: 34px auto;
