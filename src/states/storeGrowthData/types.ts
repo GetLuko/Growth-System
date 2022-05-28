@@ -28,7 +28,6 @@ export interface IGrowthData {
     Community: number;
   };
 }
-
 export interface ILevelPoint {
   point: number;
   level: string;

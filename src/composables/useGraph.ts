@@ -1,10 +1,23 @@
 import * as d3 from "d3";
-import { computed, ref } from "vue";
+import { computed, ref, ComputedRef } from "vue";
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { useWindowSize } from "@vueuse/core";
+import { IGrowthData } from "@/states/storeGrowthData/types";
 
 const { width: windowWidth } = useWindowSize();
 const { growthData, otherGrowthData } = storeGrowthData();
+
+interface IGraphSkill {
+  axis: string;
+  value: number;
+  order: number;
+}
+interface IGraphData {
+  name?: string;
+  skills: ComputedRef<IGraphSkill[]>;
+  color: string;
+}
+
 const colorMap = {
   blue: "rgba(88, 117, 236)",
   red: "rgba(217, 87, 98)",
@@ -22,7 +35,6 @@ export const useGraph = () => {
     opacityArea: 0.2,
     radius: 10,
     radians: 2 * Math.PI,
-    factor: 1,
     factorLegend: 0.6,
     ToRight: 0,
     TranslateX: 15,
@@ -33,8 +45,8 @@ export const useGraph = () => {
   let dataValues: any[] = [];
   let maxAxisValues: any[] = [];
 
-  function init(title: string, color: string) {
-    const data = {
+  function init(title: keyof IGrowthData, color: string) {
+    const data: IGraphData = {
       name: title.replace(" ", "-"),
       skills: computed(() => {
         return Object.entries(growthData.value[title]).map(([axis, value], idx) => ({
@@ -45,7 +57,7 @@ export const useGraph = () => {
       }),
       color: color,
     };
-    const otherData = {
+    const otherData: IGraphData = {
       skills: computed(() => {
         if (!otherGrowthData.value) return [];
         return Object.entries(otherGrowthData.value[title]).map(([axis, value], idx) => ({
@@ -57,14 +69,11 @@ export const useGraph = () => {
       color: "gray",
     };
 
-    var allAxis = data.skills.value.map(function (i, j) {
-      return i.axis;
-    });
-    var total = allAxis.length;
-    var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
+    const allAxis = data.skills.value.map((skill) => skill.axis);
+    const total = allAxis.length;
     d3.select(`#${title}`).select("svg").remove();
 
-    var g = d3
+    const g = d3
       .select(`#${title}`)
       .append("svg")
       .attr("width", cfg.w + cfg.ExtraWidthX)
@@ -73,8 +82,8 @@ export const useGraph = () => {
       .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")")
       .attr("id", "chartArea");
 
-    for (var j = 0; j < cfg.levels; j++) {
-      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
+    for (let j = 0; j < cfg.levels; j++) {
+      const levelFactor = Math.min(cfg.w / 2, cfg.h / 2) * ((j + 1) / cfg.levels);
 
       //Web
       g.selectAll(".levels")
@@ -82,16 +91,16 @@ export const useGraph = () => {
         .enter()
         .append("svg:line")
         .attr("x1", function (d, i) {
-          return levelFactor * (1 - cfg.factor * Math.sin((i * cfg.radians) / total));
+          return levelFactor * (1 - Math.sin((i * cfg.radians) / total));
         })
         .attr("y1", function (d, i) {
-          return levelFactor * (1 - cfg.factor * Math.cos((i * cfg.radians) / total));
+          return levelFactor * (1 - Math.cos((i * cfg.radians) / total));
         })
         .attr("x2", function (d, i) {
-          return levelFactor * (1 - cfg.factor * Math.sin(((i + 1) * cfg.radians) / total));
+          return levelFactor * (1 - Math.sin(((i + 1) * cfg.radians) / total));
         })
         .attr("y2", function (d, i) {
-          return levelFactor * (1 - cfg.factor * Math.cos(((i + 1) * cfg.radians) / total));
+          return levelFactor * (1 - Math.cos(((i + 1) * cfg.radians) / total));
         })
         .attr("class", "web")
         .style("stroke", "grey")
@@ -105,10 +114,10 @@ export const useGraph = () => {
         .enter()
         .append("svg:text")
         .attr("x", function (d) {
-          return levelFactor * (1 - cfg.factor * Math.sin(0));
+          return levelFactor * (1 - Math.sin(0));
         })
         .attr("y", function (d) {
-          return levelFactor * (1 - cfg.factor * Math.cos(0));
+          return levelFactor * (1 - Math.cos(0));
         })
         .attr("class", "skill-value")
         .style("font-family", "Circular")
@@ -142,11 +151,11 @@ export const useGraph = () => {
         .attr("x1", cfg.w / 2)
         .attr("y1", cfg.h / 2)
         .attr("x2", function (j, i) {
-          maxAxisValues[i] = { x: (cfg.w / 2) * (1 - cfg.factor * Math.sin((i * cfg.radians) / total)), y: 0 };
+          maxAxisValues[i] = { x: (cfg.w / 2) * (1 - Math.sin((i * cfg.radians) / total)), y: 0 };
           return maxAxisValues[i].x;
         })
         .attr("y2", function (j, i) {
-          maxAxisValues[i].y = (cfg.h / 2) * (1 - cfg.factor * Math.cos((i * cfg.radians) / total));
+          maxAxisValues[i].y = (cfg.h / 2) * (1 - Math.cos((i * cfg.radians) / total));
           return maxAxisValues[i].y;
         })
         .attr("class", "line")
@@ -165,9 +174,7 @@ export const useGraph = () => {
         .style("cursor", "pointer")
         .attr("text-anchor", "middle")
         .attr("dy", "1.5em")
-        .attr("transform", function (d, i) {
-          return "translate(0, -10)";
-        })
+        .attr("transform", "translate(0, -10)")
         .attr("x", function (d, i) {
           return (cfg.w / 2) * (1 - cfg.factorLegend * Math.sin((i * cfg.radians) / total));
         })
@@ -182,16 +189,18 @@ export const useGraph = () => {
       if (otherData.skills.value.length) {
         var otherDataValues: any[] = [];
 
-        g.selectAll(".nodesOthers").data(otherData.skills.value, function (j, i) {
-          return otherDataValues.push([
+        g.selectAll(".nodesOthers").data(otherData.skills.value, (j, i) =>
+          otherDataValues.push([
             (cfg.w / 2) *
               (1 -
-                (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
+                (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                  Math.sin((i * cfg.radians) / total)),
             (cfg.h / 2) *
               (1 -
-                (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total)),
-          ]);
-        });
+                (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                  Math.cos((i * cfg.radians) / total)),
+          ]),
+        );
         otherDataValues.push(otherDataValues[0]);
 
         g.selectAll(".area2")
@@ -218,9 +227,13 @@ export const useGraph = () => {
       g.selectAll(".nodes").data(data.skills.value, function (j, i) {
         return dataValues.push([
           (cfg.w / 2) *
-            (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
+            (1 -
+              (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                Math.sin((i * cfg.radians) / total)),
           (cfg.h / 2) *
-            (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total)),
+            (1 -
+              (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                Math.cos((i * cfg.radians) / total)),
         ]);
       });
       dataValues.push(dataValues[0]);
@@ -245,14 +258,14 @@ export const useGraph = () => {
         .style("fill-opacity", cfg.opacityArea);
     }
 
-    function dragend(event, i) {
+    function dragend(event: any, i: IGraphSkill) {
       move.call(this, event, i, true);
       g.selectAll(".node").remove();
       growthData.value[title][i.axis] = i.value - 1;
       drawNode();
     }
 
-    function move(event, i, isSticky = false) {
+    function move(event, i: IGraphSkill, isSticky = false) {
       this.parentNode.appendChild(this);
       var dragTarget = d3.select(this);
 
@@ -331,14 +344,18 @@ export const useGraph = () => {
     function updatePoly() {
       dataValues = [];
 
-      g.selectAll(".nodes").data(data.skills.value, function (j, i) {
+      g.selectAll(".nodes").data(data.skills.value, (j, i) =>
         dataValues.push([
           (cfg.w / 2) *
-            (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total)),
+            (1 -
+              (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                Math.sin((i * cfg.radians) / total)),
           (cfg.h / 2) *
-            (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total)),
-        ]);
-      });
+            (1 -
+              (parseFloat(Math.max((j as IGraphSkill).value, 0).toString()) / cfg.maxValue) *
+                Math.cos((i * cfg.radians) / total)),
+        ]),
+      );
 
       dataValues = [dataValues];
 
@@ -360,20 +377,16 @@ export const useGraph = () => {
         .enter()
         .append("svg:circle")
         .attr("class", "node")
-        .attr("id", "radar-chart-points-" + data.title)
+        .attr("id", (skill) => "radar-chart-points-" + skill.axis)
         .attr("r", cfg.radius)
         .attr("alt", function (j) {
           return Math.max(j.value, 0);
         })
         .attr("cx", function (j, i) {
-          return (
-            (cfg.w / 2) * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.sin((i * cfg.radians) / total))
-          );
+          return (cfg.w / 2) * (1 - (Math.max(j.value, 0) / cfg.maxValue) * Math.sin((i * cfg.radians) / total));
         })
         .attr("cy", function (j, i) {
-          return (
-            (cfg.h / 2) * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos((i * cfg.radians) / total))
-          );
+          return (cfg.h / 2) * (1 - (Math.max(j.value, 0) / cfg.maxValue) * Math.cos((i * cfg.radians) / total));
         })
         .attr("data-id", function (j) {
           return j.axis;
