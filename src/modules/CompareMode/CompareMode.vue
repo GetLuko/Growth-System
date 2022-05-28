@@ -2,14 +2,14 @@
   <div>
     <Button
       class="p-button-rounded"
-      :class="[$style.compareModeButton, { 'p-button-secondary': !isCompareMode }]"
+      :class="[$style.compareModeButton, { 'p-button-secondary': !otherGrowthData }]"
       @click="onCompareMode"
     >
       <i class="pi pi-users"></i>
     </Button>
     <Dialog
       v-model:visible="isVisible"
-      header="Select an import method"
+      header="Choose an import method for comparison"
       :breakpoints="{ '960px': '75vw', '640px': '95vw' }"
       :style="{ width: '50vw' }"
       :draggable="false"
@@ -61,13 +61,11 @@ import { GrowthDataTypeEnums } from "@/states/storeGrowthData/types";
 import { useGraph } from "@/composables/useGraph";
 import { useGrowthData } from "@/composables/useGrowthData";
 
-const { cleanOtherGrowthData } = useGrowthData();
+const { cleanOtherGrowthData, otherGrowthData } = useGrowthData();
 const { graphId } = useGraph();
-const isCompareMode = ref(false);
 const isVisible = ref(false);
 const { importFromURL, importFromFile } = useIO();
 const onCompareMode = () => {
-  isCompareMode.value = true;
   isVisible.value = true;
 };
 const fileInput = ref<any>(null);
@@ -86,9 +84,6 @@ const onSelectFile = (e: any) => {
   link.value = null;
 };
 const onCancel = () => {
-  // turn off compare mode
-  isCompareMode.value = false;
-
   // update graph
   cleanOtherGrowthData();
   graphId.value = Date.now();
@@ -106,8 +101,6 @@ const onSubmit = () => {
   else if (fileInput.value) importFromFile(fileInput.value.files[0], GrowthDataTypeEnums.other);
 
   graphId.value = Date.now();
-  // turn on compare mode
-  isCompareMode.value = true;
 
   // close popup
   isVisible.value = false;

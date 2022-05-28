@@ -33,5 +33,5 @@ export const useGrowthData = () => {
   const cleanOtherGrowthData = () => {
     otherGrowthData.value = null;
   };
-  return { points, level, title, cleanOtherGrowthData };
+  return { points, level, title, cleanOtherGrowthData, otherGrowthData };
 };
