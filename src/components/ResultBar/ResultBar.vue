@@ -1,8 +1,10 @@
 <template>
-  <div :class="$style.navResult">
-    <span :class="[$style.info, $style['info-points']]">{{ points }} point{{ points === 1 ? "" : "s" }}</span>
-    <span :class="[$style.info, $style['info-lvl']]">{{ level }} lvl</span>
-    <span :class="$style.info">{{ title }}</span>
+  <div>
+    <span class="info-points" :class="[$style.info, $style['info-points']]">
+      {{ points }} point{{ points === 1 ? "" : "s" }}
+    </span>
+    <span class="info-lvl" :class="[$style.info, $style['info-lvl']]">{{ level }} lvl</span>
+    <span class="info-title" :class="$style.info">{{ title }}</span>
   </div>
 </template>
 <script lang="ts" setup>
