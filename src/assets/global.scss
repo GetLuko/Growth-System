@@ -14,9 +14,23 @@ $fontFiles: (
 }
 
 // dark theme
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: $bluko-500;
+}
+
 .dark {
   background-color: #212121;
   color: white;
+  a {
+    color: white;
+  }
+  a:hover {
+    color: $bluko-300;
+  }
   .p-menubar,
   .p-menubar-root-list,
   .p-submenu-list {

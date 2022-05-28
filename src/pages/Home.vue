@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container" :key="windowWidth">
     <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
-      <RadarChart :title="title" :color="colors[index]" :class="$style.chart" />
+      <RadarChart :title="title" :link="links[title]" :color="colors[index]" :class="$style.chart" />
     </div>
     <CompareMode />
   </div>
@@ -19,6 +19,12 @@ const { graphId } = useGraph();
 
 const { growthData, otherGrowthData } = storeGrowthData();
 const colors = ["blue", "red", "green", "yellow"];
+const links = {
+  Engineering: "https://luko.notion.site/Engineering-Growth-Track-0e160fee19df42789be55a23bc83f3a8",
+  Execution: "https://luko.notion.site/Execution-Growth-Track-e6d072e1ac5b4e518bc2e916eea0f999",
+  Supporting: "https://luko.notion.site/Supporting-Growth-Track-3cc636233d624f6d861e542fca0af142",
+  Strengthening: "https://luko.notion.site/Strengthening-Growth-Track-f885547be9a74a1f86412fae3e3366ef",
+};
 </script>
 
 <style lang="scss" module>

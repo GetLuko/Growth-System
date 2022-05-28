@@ -1,7 +1,7 @@
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { pipe, flatMap, map, reduce, filter, last, values } from "@fxts/core";
 import { storeGrowthData } from "@/states/storeGrowthData";
-import { ILevelTitle, LevelsEnum } from "@/states/storeGrowthData/types";
+import { LevelsEnum } from "@/states/storeGrowthData/types";
 
 const { growthData, otherGrowthData, milestoneToPoint, pointToLevel, levelToTitle } = storeGrowthData();
 
