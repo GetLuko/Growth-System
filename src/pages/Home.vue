@@ -28,9 +28,6 @@ const links = {
 </script>
 
 <style lang="scss" module>
-$navbar-height: 64px;
-$result-bar-height: 50px;
-
 .container {
   margin-top: $navbar-height;
   overflow-x: hidden;

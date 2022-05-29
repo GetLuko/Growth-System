@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fxts/core": "^0.5.0",
+    "@vueuse/components": "^8.5.0",
     "@vueuse/core": "^8.2.5",
     "d3": "^7.4.3",
     "minireset.css": "^0.0.7",

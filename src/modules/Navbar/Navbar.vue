@@ -1,7 +1,9 @@
 <template>
   <Menubar :model="navItems" :class="$style.navbar">
     <template #start>
-      <div :class="$style.logo" class="logo">Growth System</div>
+      <a href="/">
+        <div :class="$style.logo" class="logo">Growth System</div>
+      </a>
     </template>
     <template #end>
       <div :class="$style.rightNav">
@@ -32,8 +34,8 @@ import { useIO } from "@/composables/useIO";
 import { useClipboard } from "@vueuse/core";
 import { useToast } from "primevue/usetoast";
 import ResultBar from "@/components/ResultBar";
-import { useDark, useToggle } from "@vueuse/core";
 import { useGraph } from "@/composables/useGraph";
+import { storeTheme } from "@/states/storeTheme";
 
 const inputTag = ref<HTMLElement | null>(null);
 const { points, level, title } = useGrowthData();
@@ -41,7 +43,7 @@ const { exportToFile, exportToBase64, importFromFile } = useIO();
 const exportedURL = ref<string>("");
 const toast = useToast();
 const { copy } = useClipboard({ source: exportedURL });
-const isDark = useDark();
+const { isDark } = storeTheme();
 const { graphId } = useGraph();
 const onImport = () => {
   inputTag.value?.click();
@@ -83,12 +85,18 @@ const navItems = ref([
     icon: "pi pi-fw pi-upload",
     command: onImport,
   },
+  {
+    label: "Docs",
+    icon: "pi pi-fw pi-book",
+    to: "/Docs",
+  },
 ]);
 </script>
 
 <style lang="scss" module>
 .navbar {
   position: fixed !important;
+  z-index: 100;
   width: 100%;
   top: 0;
   padding: 0 24px;

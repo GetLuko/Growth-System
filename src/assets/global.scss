@@ -14,18 +14,11 @@ $fontFiles: (
 }
 
 // dark theme
-a {
-  color: black;
-  text-decoration: none;
-}
-a:hover {
-  color: $bluko-500;
-}
-
 .dark {
   background-color: #212121;
   color: white;
-  a {
+  a,
+  i {
     color: white;
   }
   a:hover {
@@ -77,9 +70,6 @@ a:hover {
   svg {
     fill: white;
   }
-  i {
-    color: white;
-  }
 
   .logo {
     color: rgb(129, 156, 216);
@@ -98,5 +88,14 @@ a:hover {
   .info-title {
     color: rgb(113, 163, 232);
     background-color: black;
+  }
+  .router-link-active {
+    background-color: #4c4d5c !important;
+    span {
+      color: white !important;
+    }
+  }
+  .p-treenode-label {
+    color: white;
   }
 }
