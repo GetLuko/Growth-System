@@ -1,9 +1,9 @@
 <template>
   <Menubar :model="navItems" :class="$style.navbar">
     <template #start>
-      <a href="/">
+      <router-link to="/">
         <div :class="$style.logo" class="logo">Growth System</div>
-      </a>
+      </router-link>
     </template>
     <template #end>
       <div :class="$style.rightNav">
