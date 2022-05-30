@@ -122,9 +122,9 @@ const onSubmit = () => {
     font-size: 25px;
     margin: 0 auto;
   }
-  @include below(xsmall) {
+  @include below(small) {
     left: 15px;
-    bottom: 60px;
+    bottom: calc($result-bar-height + 15px);
     height: 50px !important;
     width: 50px !important;
   }

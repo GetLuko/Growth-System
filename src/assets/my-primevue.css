@@ -5709,13 +5709,13 @@ a:hover {
 .p-progressbar {
   border: 0 none;
   height: 1.5rem;
-  background: #e9ecef;
+  background: #757575d4;
   border-radius: var(--border-radius);
 }
 .p-progressbar .p-progressbar-value {
   border: 0 none;
   margin: 0;
-  background: var(--primary-color);
+  background: #425ed7;
 }
 .p-progressbar .p-progressbar-label {
   color: #ffffff;

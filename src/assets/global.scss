@@ -71,24 +71,6 @@ $fontFiles: (
     fill: white;
   }
 
-  .logo {
-    color: rgb(129, 156, 216);
-  }
-  .resultBar {
-    background-color: rgb(46, 47, 63);
-  }
-  .info-points {
-    background: rgb(31, 59, 56);
-    color: rgb(144, 226, 212);
-  }
-  .info-lvl {
-    color: rgb(206, 169, 99);
-    background-color: rgb(77 53 2);
-  }
-  .info-title {
-    color: rgb(113, 163, 232);
-    background-color: black;
-  }
   .router-link-active {
     background-color: #4c4d5c !important;
     span {
@@ -97,5 +79,10 @@ $fontFiles: (
   }
   .p-treenode-label {
     color: white;
+  }
+
+  .p-progressbar {
+    background: #444444;
+    border: 1px solid #818181;
   }
 }

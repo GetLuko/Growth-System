@@ -28,10 +28,6 @@ export interface IGrowthData {
     Community: number;
   };
 }
-export interface ILevelPoint {
-  point: number;
-  level: string;
-}
 
 export enum LevelsEnum {
   lv3 = "3",

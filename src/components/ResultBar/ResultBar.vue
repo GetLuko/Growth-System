@@ -1,19 +1,29 @@
 <template>
   <div>
-    <span class="info-points" :class="[$style.info, $style['info-points']]">
-      {{ points }} point{{ points === 1 ? "" : "s" }}
-    </span>
-    <span class="info-lvl" :class="[$style.info, $style['info-lvl']]">{{ level }} lvl</span>
-    <span class="info-title" :class="$style.info">{{ title }}</span>
+    <div :class="$style.title">
+      {{ title }}
+    </div>
+
+    <div :class="$style.progressBarContainer">
+      <ProgressBar :value="progress === Infinity ? 100 : progress" :showValue="false" :class="$style.progressBar" />
+      <div :class="$style.progressBarValue">
+        level {{ level }} - {{ progress === Infinity ? "Max" : progress + "%" }} ({{ points }} pts)
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { PropType } from "vue";
+import ProgressBar from "primevue/progressbar";
 
 const props = defineProps({
   points: {
     type: Number,
     required: true,
+  },
+  progress: {
+    type: Number,
+    default: 0,
   },
   level: {
     type: String,
@@ -26,36 +36,23 @@ const props = defineProps({
 });
 </script>
 <style module lang="scss">
-.info {
-  color: inherit;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
+.progressBarContainer {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  width: 100%;
   display: flex;
-  margin-left: 12px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  padding: 5px 12px;
-  border-radius: 24px;
-  color: $bluko-700;
-  background: $bluko-50;
+  justify-content: center;
 }
-
-.info-points {
-  color: $mint-700;
-  background: $mint-100;
+.progressBar {
+  width: 100%;
 }
-
-.info-lvl {
-  color: $gold-700;
-  background: $gold-100;
+.progressBarValue {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  color: white;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
 }
 </style>

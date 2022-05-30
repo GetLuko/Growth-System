@@ -49,7 +49,7 @@ const links = {
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
-  @include below(xsmall) {
+  @include below(small) {
     height: calc(100vh - $navbar-height - $result-bar-height);
   }
 }
@@ -58,7 +58,7 @@ const links = {
   align-items: center;
   scroll-snap-align: start;
   height: calc(100vh - $navbar-height);
-  @include below(xsmall) {
+  @include below(small) {
     height: calc(100vh - $navbar-height - $result-bar-height);
   }
 }
