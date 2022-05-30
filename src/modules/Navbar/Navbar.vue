@@ -139,18 +139,8 @@ const navItems = ref([
 }
 
 .navResult {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 8px;
-  width: 30vw;
-
   @include below(small) {
     display: none;
-  }
-  &.isDark {
-    color: white;
   }
 }
 
@@ -161,12 +151,7 @@ const navItems = ref([
   position: fixed;
   width: 100%;
   bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding: 0 10px;
-  gap: 8px;
 
   @include above(small) {
     display: none;
