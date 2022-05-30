@@ -2,7 +2,7 @@
   <div>
     <Button
       class="p-button-rounded"
-      :class="[$style.compareModeButton, { 'p-button-secondary': !otherGrowthData }]"
+      :class="[$style.compareModeButton, { 'p-button-secondary': hasOtherGrowthData }]"
       @click="onCompareMode"
     >
       <i class="pi pi-users"></i>
@@ -61,7 +61,7 @@ import { GrowthDataTypeEnums } from "@/states/storeGrowthData/types";
 import { useGraph } from "@/composables/useGraph";
 import { useGrowthData } from "@/composables/useGrowthData";
 
-const { cleanOtherGrowthData, otherGrowthData } = useGrowthData();
+const { cleanOtherGrowthData, hasOtherGrowthData } = useGrowthData();
 const { graphId } = useGraph();
 const isVisible = ref(false);
 const { importFromURL, importFromFile } = useIO();

@@ -38,7 +38,7 @@ import { useGraph } from "@/composables/useGraph";
 import { storeTheme } from "@/states/storeTheme";
 
 const inputTag = ref<HTMLElement | null>(null);
-const { points, level, title } = useGrowthData();
+const { points, level, title, cleanAllGrowthData } = useGrowthData();
 const { exportToFile, exportToBase64, importFromFile } = useIO();
 const exportedURL = ref<string>("");
 const toast = useToast();
@@ -63,27 +63,39 @@ const onExportLink = () => {
   copy();
   toast.add({ severity: "success", detail: "URL Copied!", life: 2000 });
 };
+
 const navItems = ref([
   {
-    label: "Export",
-    icon: "pi pi-fw pi-download",
+    label: "Data",
+    icon: "pi pi-fw pi-chart-bar",
     items: [
       {
-        label: "Link",
-        icon: "pi pi-fw pi-link",
-        command: onExportLink,
+        label: "Export to",
+        icon: "pi pi-fw pi-download",
+        items: [
+          {
+            label: "Link",
+            icon: "pi pi-fw pi-link",
+            command: onExportLink,
+          },
+          {
+            label: "JSON",
+            icon: "pi pi-fw pi-file",
+            command: onExportToFile,
+          },
+        ],
       },
       {
-        label: "JSON",
-        icon: "pi pi-fw pi-file",
-        command: onExportToFile,
+        label: "Import",
+        icon: "pi pi-fw pi-upload",
+        command: onImport,
+      },
+      {
+        label: "Clear",
+        icon: "pi pi-fw pi-trash",
+        command: cleanAllGrowthData,
       },
     ],
-  },
-  {
-    label: "Import",
-    icon: "pi pi-fw pi-upload",
-    command: onImport,
   },
   {
     label: "Docs",

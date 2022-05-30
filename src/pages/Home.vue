@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container" :key="windowWidth">
-    <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
+    <div v-for="(title, index) in Object.keys(growthData)" :key="growthData[title]" :class="$style.item">
       <RadarChart
         :title="title"
         :link="links[title]"

@@ -1,10 +1,8 @@
-import { ref } from "vue";
 import { IGrowthData, ILevelPoint, ILevelTitle } from "./types";
 import { useStorage } from "@vueuse/core";
 
-const growthData = useStorage<IGrowthData>(
-  "growth-data",
-  {
+function DefaultGrowthData(): IGrowthData {
+  return {
     Engineering: {
       Frontend: 0,
       Hardware: 0,
@@ -33,15 +31,15 @@ const growthData = useStorage<IGrowthData>(
       Evangelism: 0,
       Community: 0,
     },
+  };
+}
+
+const growthData = useStorage<IGrowthData>("growth-data", DefaultGrowthData(), undefined, {
+  serializer: {
+    read: (v: any) => JSON.parse(atob(v)),
+    write: (v: any) => btoa(JSON.stringify(v)),
   },
-  undefined,
-  {
-    serializer: {
-      read: (v: any) => JSON.parse(atob(v)),
-      write: (v: any) => btoa(JSON.stringify(v)),
-    },
-  },
-);
+});
 
 const otherGrowthData = useStorage<IGrowthData | null>("other-growth-data", null, undefined, {
   serializer: {
@@ -82,6 +80,7 @@ const levelToTitle: ILevelTitle = {
 
 export const storeGrowthData = () => {
   return {
+    DefaultGrowthData,
     growthData,
     otherGrowthData,
     milestoneToPoint: [0, 1, 3, 6, 12, 20],
