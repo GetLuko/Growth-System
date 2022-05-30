@@ -1,7 +1,13 @@
 <template>
   <div :class="$style.container" :key="windowWidth">
     <div v-for="(title, index) in Object.keys(growthData)" :key="`${title}-${graphId}`" :class="$style.item">
-      <RadarChart :title="title" :link="links[title]" :color="colors[index]" :class="$style.chart" />
+      <RadarChart
+        :title="title"
+        :link="links[title]"
+        :color="colors[index]"
+        :class="$style.chart"
+        :key="otherGrowthData?.[title]"
+      />
     </div>
     <CompareMode />
   </div>
