@@ -1,23 +1,24 @@
 import { storeGrowthData } from "@/states/storeGrowthData";
 import { toRaw } from "vue";
 import { pipe } from "@fxts/core";
-import { LocationQueryValue, useRouter } from "vue-router";
 import { useGraph } from "@/composables/useGraph";
 import { GrowthDataTypeEnums } from "@/states/storeGrowthData/types";
+import { useGrowthData } from "./useGrowthData";
 
-const { growthData, otherGrowthData } = storeGrowthData();
+const { growthData, otherGrowthData, trimGrowthData } = storeGrowthData();
 const { graphId } = useGraph();
+
 const reader = new FileReader();
 const otherReader = new FileReader();
 
 reader.onload = (e: any) => {
   const res = JSON.parse(e.target.result);
-  growthData.value = res;
+  growthData.value = trimGrowthData(res);
   graphId.value = Date.now();
 };
 otherReader.onload = (e: any) => {
   const res = JSON.parse(e.target.result);
-  otherGrowthData.value = res;
+  otherGrowthData.value = trimGrowthData(res);
   graphId.value = Date.now();
 };
 
@@ -27,8 +28,8 @@ export const useIO = () => {
     if (!type) type = GrowthDataTypeEnums.mine;
 
     pipe(queryValue, atob, JSON.parse, (data) => {
-      if (type === GrowthDataTypeEnums.mine) growthData.value = data;
-      if (type === GrowthDataTypeEnums.other) otherGrowthData.value = data;
+      if (type === GrowthDataTypeEnums.mine) growthData.value = trimGrowthData(data);
+      if (type === GrowthDataTypeEnums.other) otherGrowthData.value = trimGrowthData(data);
     });
   };
 

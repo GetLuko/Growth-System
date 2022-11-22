@@ -1,5 +1,6 @@
 import { IGrowthData, ILevelTitle } from "./types";
 import { useStorage } from "@vueuse/core";
+import { get, isNil } from "lodash-es";
 
 function DefaultGrowthData(): IGrowthData {
   return {
@@ -34,16 +35,30 @@ function DefaultGrowthData(): IGrowthData {
   };
 }
 
+const trimGrowthData = (data: any) => {
+  const blackList = ["Engineering.DataAnalytics"];
+  blackList.forEach((key) => {
+    if (isNil(get(data, key))) return;
+    const splittedKeys = key.split(".");
+    let d = null;
+    for (let i = 0; i < splittedKeys.length - 1; i++) {
+      d = data[splittedKeys[i]];
+    }
+    delete d[splittedKeys[splittedKeys.length - 1]];
+  });
+  return data;
+};
+
 const growthData = useStorage<IGrowthData>("growth-data", DefaultGrowthData(), undefined, {
   serializer: {
-    read: (v: any) => JSON.parse(atob(v)),
+    read: (v: any) => trimGrowthData(JSON.parse(atob(v))),
     write: (v: any) => btoa(JSON.stringify(v)),
   },
 });
 
 const otherGrowthData = useStorage<IGrowthData | null>("other-growth-data", null, undefined, {
   serializer: {
-    read: (v: any) => (v ? JSON.parse(atob(v)) : null),
+    read: (v: any) => (v ? trimGrowthData(JSON.parse(atob(v))) : null),
     write: (v: any) => btoa(JSON.stringify(v)),
   },
 });
@@ -86,5 +101,6 @@ export const storeGrowthData = () => {
     milestoneToPoint: [0, 1, 3, 6, 12, 20],
     pointToLevel,
     levelToTitle,
+    trimGrowthData,
   };
 };
