@@ -1,1 +1,0 @@
-export { storeTheme } from "./storeTheme";

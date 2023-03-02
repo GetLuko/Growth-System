@@ -1,0 +1,87 @@
+module.exports = {
+  ".typo-giga-title": {
+    fontWeight: "500",
+    fontSize: "64px",
+    fontStyle: "normal",
+    lineHeight: "80px",
+  },
+  ".typo-mega-title": {
+    fontWeight: "500",
+    fontSize: "48px",
+    fontStyle: "normal",
+    lineHeight: "64px",
+  },
+  ".typo-extra-large-title": {
+    fontWeight: "500",
+    fontSize: "40px",
+    fontStyle: "normal",
+    lineHeight: "56px",
+  },
+  ".typo-large-title": {
+    fontWeight: "500",
+    fontSize: "32px",
+    fontStyle: "normal",
+    lineHeight: "48px",
+  },
+  ".typo-title": {
+    fontWeight: "500",
+    fontSize: "28px",
+    fontStyle: "normal",
+    lineHeight: "40px",
+  },
+  ".typo-headline-bold": {
+    fontWeight: "500",
+    fontSize: "20px",
+    fontStyle: "normal",
+    lineHeight: "32px",
+  },
+  ".typo-headline": {
+    fontWeight: "400",
+    fontSize: "20px",
+    fontStyle: "normal",
+    lineHeight: "32px",
+  },
+  ".typo-callout": {
+    fontWeight: "400",
+    fontSize: "16px",
+    fontStyle: "normal",
+    lineHeight: "24px",
+    textTransform: "uppercase",
+  },
+  ".typo-body-bold": {
+    fontWeight: "500",
+    fontSize: "16px",
+    fontStyle: "normal",
+    lineHeight: "24px",
+  },
+  ".typo-body": {
+    fontWeight: "400",
+    fontSize: "16px",
+    fontStyle: "normal",
+    lineHeight: "24px",
+  },
+  ".typo-sub-text-bold": {
+    fontWeight: "500",
+    fontSize: "14px",
+    fontStyle: "normal",
+    lineHeight: "20px",
+  },
+  ".typo-sub-text": {
+    fontWeight: "400",
+    fontSize: "14px",
+    fontStyle: "normal",
+    lineHeight: "20px",
+  },
+  ".typo-caption-bold": {
+    fontWeight: "500",
+    fontSize: "12px",
+    fontStyle: "normal",
+    lineHeight: "16px",
+  },
+  ".typo-caption": {
+    fontWeight: "400",
+    fontSize: "12px",
+    fontStyle: "normal",
+    lineHeight: "16px",
+  },
+};

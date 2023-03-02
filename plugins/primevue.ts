@@ -1,0 +1,30 @@
+import { defineNuxtPlugin } from "#app";
+import PrimeVue from "primevue/config";
+import Menubar from "primevue/menubar";
+import TabView from "primevue/tabview";
+import TabPanel from "primevue/tabpanel";
+import Dialog from "primevue/dialog";
+import Button from "primevue/button";
+import InputText from "primevue/inputtext";
+import Textarea from "primevue/textarea";
+import SpeedDial from "primevue/speeddial";
+import ToastService from "primevue/toastservice";
+import Toast from "primevue/toast";
+import ProgressBar from "primevue/progressbar";
+import Avatar from "primevue/avatar";
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(PrimeVue);
+  nuxtApp.vueApp.component("Menubar", Menubar);
+  nuxtApp.vueApp.component("TabView", TabView);
+  nuxtApp.vueApp.component("TabPanel", TabPanel);
+  nuxtApp.vueApp.component("Dialog", Dialog);
+  nuxtApp.vueApp.component("Button", Button);
+  nuxtApp.vueApp.component("InputText", InputText);
+  nuxtApp.vueApp.component("Textarea", Textarea);
+  nuxtApp.vueApp.component("SpeedDial", SpeedDial);
+  nuxtApp.vueApp.component("ProgressBar", ProgressBar);
+  nuxtApp.vueApp.component("Avatar", Avatar);
+  nuxtApp.vueApp.use(ToastService);
+  nuxtApp.vueApp.component("Toast", Toast);
+});
