@@ -9,6 +9,11 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue"],
   },
+  runtimeConfig: {
+    public: {
+      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    },
+  },
   vite: {
     css: {
       preprocessorOptions: {
