@@ -4,7 +4,7 @@
       <router-link to="/" class="text-bluko-300 typo-headline mr-5 hover:text-bluko-200"> Growth System </router-link>
     </template>
     <template #end>
-      <div :class="$style.rightNav">
+      <div class="flex items-center gap-[24px]">
         <ResultBar :class="[$style.navResult]" class="resultBar" />
       </div>
     </template>
@@ -34,12 +34,6 @@ const navItems = [
   height: 64px;
 }
 
-.navResult {
-  /* @include below(small) {
-    display: none;
-  } */
-}
-
 .bottomResult {
   height: $result-bar-height;
   background-color: white;
@@ -48,19 +42,11 @@ const navItems = [
   width: 100%;
   bottom: 0;
   padding: 0 10px;
-
-  /* @include above(small) {
-    display: none;
-  } */
 }
-
-.rightNav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.hide {
-  display: none;
+</style>
+<style>
+a.router-link-active-exact {
+  background-color: rgba(158, 173, 230, 0.08);
+  border-radius: 4px;
 }
 </style>
