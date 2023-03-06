@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { TabData } from "@/types/Growth";
-import TabPanel from "primevue/tabpanel";
 
 const props = defineProps({
   tab: {
@@ -9,10 +8,16 @@ const props = defineProps({
     required: true,
   },
 });
+
+const tabName = ref("");
 const isEdit = ref(false);
+const inputElement = ref<HTMLElement>();
 const onEdit = () => {
   isEdit.value = true;
-  nextTick(() => inputElement.value?.focus());
+
+  nextTick(() => {
+    inputElement.value?.focus();
+  });
 };
 const onFinishEdit = () => {
   isEdit.value = false;
@@ -21,28 +26,27 @@ const onKeyDown = (e: KeyboardEvent) => {
   if (e.code == "Enter") return (isEdit.value = false);
   if (e.code == "Escape") return (isEdit.value = false);
 };
-const inputElement = ref<HTMLElement>();
 watch(
   () => isEdit.value,
   (v) => {
-    if (!v && !props.tab.name) {
-      props.tab.name = `Data ${props.tab.id}`;
-    }
+    props.tab.name = tabName.value || props.tab.name;
   },
 );
 </script>
 <template>
   <div>
     <input
+      v-if="isEdit"
+      autofocus
+      class="px-2 rounded"
       name="modify tab"
-      v-show="isEdit"
       ref="inputElement"
       type="text"
       @blur="onFinishEdit"
       :value="tab.name"
       @keydown.stop="onKeyDown"
-      @input="(event) => (tab.name = event.target?.value)"
+      @input="(event) => (tabName = event.target?.value)"
     />
-    <span v-show="!isEdit" class="p-2" @dblclick="onEdit"> {{ tab.name || `Data ${tab.id}` }} </span>
+    <span v-else="!tab.isEdit" class="p-2" @dblclick="onEdit"> {{ tab.name || `Data ${tab.id}` }} </span>
   </div>
 </template>

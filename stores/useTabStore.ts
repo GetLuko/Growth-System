@@ -7,9 +7,10 @@ import { useStorage } from "@vueuse/core";
 import { useIO } from "~~/composables/useIO";
 import { useToastStore } from "./useToastStore";
 import { useClipboard } from "@vueuse/core";
+import { TabData } from "~~/types/Growth";
 
 const { getFilename } = useIO();
-const tabData = useStorage<{ id: number; name?: string; growthData: GrowthData }[]>("tabData", []);
+const tabData = useStorage<TabData[]>("tabData", []);
 const toastStore = useToastStore();
 const getDefaultGrowthData = (): GrowthData => {
   return {
