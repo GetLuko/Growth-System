@@ -12,6 +12,8 @@ import ToastService from "primevue/toastservice";
 import Toast from "primevue/toast";
 import ProgressBar from "primevue/progressbar";
 import Avatar from "primevue/avatar";
+import ConfirmDialog from "primevue/confirmdialog";
+import ConfirmationService from "primevue/confirmationservice";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue);
@@ -25,6 +27,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("SpeedDial", SpeedDial);
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("Avatar", Avatar);
-  nuxtApp.vueApp.use(ToastService);
+  nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
   nuxtApp.vueApp.component("Toast", Toast);
+  nuxtApp.vueApp.use(ToastService);
+  nuxtApp.vueApp.use(ConfirmationService);
 });

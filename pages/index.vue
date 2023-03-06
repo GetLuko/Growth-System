@@ -1,9 +1,23 @@
 <script setup>
 import { useTabStore } from "~~/stores/useTabStore";
 import { storeToRefs } from "pinia";
+import { useConfirm } from "primevue/useconfirm";
 
-const store = useTabStore();
-const { tabData, activeTabIdx } = storeToRefs(store);
+const tabStore = useTabStore();
+const confirm = useConfirm();
+const { tabData, activeTabIdx } = storeToRefs(tabStore);
+const deleteData = (tabId, name) => {
+  confirm.require({
+    target: document.body,
+    message: `Are you sure you want to delete "${name}"?`,
+    header: "Confirmation",
+    icon: "pi pi-exclamation-triangle",
+    accept: () => {
+      tabStore.deleteData(tabId);
+    },
+  });
+};
+
 definePageMeta({
   middleware: ["growth-data-url"],
 });
@@ -20,7 +34,7 @@ const onChangeTab = (t) => {
             <BaseTab :tab="tab" />
             <span
               class="hover:bg-gray-800 w-[20px] h-[20px] rounded-[50%] flex justify-center items-center"
-              @click="() => store.deleteData(tab.id)"
+              @click="() => deleteData(tab.id, tab.name)"
             >
               <i class="pi pi-times text-[10px]"></i>
             </span>

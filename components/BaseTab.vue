@@ -37,7 +37,6 @@ watch(
   <div>
     <input
       v-if="isEdit"
-      autofocus
       class="px-2 rounded"
       name="modify tab"
       ref="inputElement"
