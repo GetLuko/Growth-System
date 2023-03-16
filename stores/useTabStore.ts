@@ -120,7 +120,7 @@ export const useTabStore = defineStore("GrowthStore", () => {
     toastStore.show({
       severity: "success",
       summary: "Success",
-      detail: "Tab data url copied!",
+      detail: "Your current tab's growth data is successfully converted into url.",
     });
   };
 
