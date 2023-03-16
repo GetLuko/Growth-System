@@ -10,7 +10,7 @@ import { useIO } from "~~/composables/useIO";
 const tabStore = useTabStore();
 const toastStore = useToastStore();
 const { tabData } = storeToRefs(tabStore);
-const CLIENT_ID = "570576970519-p8t45qkiuvdpam7cp39lkrubnafhc4oc.apps.googleusercontent.com";
+const CLIENT_ID = "485951106142-grngi08vhqptgh232iv4ekojjevdmu2h.apps.googleusercontent.com";
 const API_KEY = useRuntimeConfig().public.GOOGLE_API_KEY;
 const scopes = "https://www.googleapis.com/auth/drive.file";
 const accessToken = useStorage("token", "", sessionStorage);
