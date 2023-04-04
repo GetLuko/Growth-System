@@ -54,10 +54,10 @@ export enum LevelsEnum {
 
 export enum ColorsEnum {
   blue = "blue",
+  violet = "violet",
   red = "red",
   green = "green",
   yellow = "yellow",
-  violet = "violet",
 }
 
 export type ILevelTitle = {

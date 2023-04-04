@@ -10,8 +10,6 @@ import { useClipboard } from "@vueuse/core";
 import { TabData } from "~~/types/Growth";
 
 const { getFilename } = useIO();
-const tabData = useStorage<TabData[]>("tabData", []);
-const toastStore = useToastStore();
 
 const checkValidGrowthData = (original: any, obj: any) => {
   const keys1 = Object.keys(original);
@@ -51,6 +49,12 @@ const defaultGrowthData: GrowthData = {
     Firmware: 0,
     MachineL: 0,
   },
+  DataAnalytics: {
+    BusinessAnalytics: 0,
+    ProductAnalytics: 0,
+    DataScience: 0,
+    BiEngineering: 0,
+  },
   Execution: {
     Delivery: 0,
     Optimization: 0,
@@ -69,16 +73,6 @@ const defaultGrowthData: GrowthData = {
     Evangelism: 0,
     Community: 0,
   },
-  DataAnalytics: {
-    BusinessAnalytics: 0,
-    ProductAnalytics: 0,
-    DataScience: 0,
-    BiEngineering: 0,
-  },
-};
-
-const getDefaultGrowthData = (): GrowthData => {
-  return cloneDeep(defaultGrowthData);
 };
 
 const trimGrowthData = (data: any) => {
@@ -96,18 +90,50 @@ const trimGrowthData = (data: any) => {
     delete d[splittedKeys[splittedKeys.length - 1]];
   });
 
-  // delete corrupted data
-  if (!checkValidGrowthData(defaultGrowthData, data)) {
-    return null;
-  }
-
   // append data if empty
   Object.keys(defaultGrowthData).forEach((domain) => {
     if (!data[domain]) data[domain] = cloneDeep(defaultGrowthData[domain as GrowthDomain]);
   });
 
-  return data;
+  // delete corrupted data
+  if (!checkValidGrowthData(defaultGrowthData, data)) {
+    return null;
+  }
+
+  // reorder data
+  const orderedData: { [key: string]: object } = {};
+  Object.keys(defaultGrowthData).forEach((domain: string) => {
+    orderedData[domain] = data[domain];
+  });
+
+  return orderedData;
 };
+
+const tabData = useStorage<TabData[]>("tabData", [], localStorage, {
+  serializer: {
+    read: (tab: any) => {
+      if (!tab) return [];
+      try {
+        const res = JSON.parse(tab)
+          .map((tab) => ({
+            ...tab,
+            growthData: trimGrowthData(tab.growthData),
+          }))
+          .filter((tab) => tab.growthData);
+        return res;
+      } catch (error) {
+        return [];
+      }
+    },
+    write: (v: any) => JSON.stringify(v),
+  },
+});
+const toastStore = useToastStore();
+
+const getDefaultGrowthData = (): GrowthData => {
+  return cloneDeep(defaultGrowthData);
+};
+
 const parseJSON = (obj: string) => {
   try {
     return JSON.parse(obj);
