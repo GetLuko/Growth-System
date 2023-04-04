@@ -1,18 +1,45 @@
 // store/filters.ts
 import { defineStore } from "pinia";
 import { GrowthData, GrowthDomain } from "~~/types/Growth";
-import { get, isNil } from "lodash-es";
+import { get, isNil, cloneDeep } from "lodash-es";
 import { pipe } from "@fxts/core";
 import { useStorage } from "@vueuse/core";
 import { useIO } from "~~/composables/useIO";
 import { useToastStore } from "./useToastStore";
 import { useClipboard } from "@vueuse/core";
 import { TabData } from "~~/types/Growth";
-import cloneDeep from "lodash-es/cloneDeep";
 
 const { getFilename } = useIO();
 const tabData = useStorage<TabData[]>("tabData", []);
 const toastStore = useToastStore();
+
+const checkValidGrowthData = (original: any, obj: any) => {
+  const keys1 = Object.keys(original);
+  const keys2 = Object.keys(obj);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < keys1.length; i++) {
+    const key = keys1[i];
+    if (!obj.hasOwnProperty(key)) {
+      return false;
+    }
+    if (typeof original[key] === "object" && typeof obj[key] === "object") {
+      if (!checkValidGrowthData(original[key], obj[key])) {
+        return false;
+      }
+    } else if (typeof obj[key] !== "number") {
+      return false;
+    } else if (obj[key] < 0 || obj[key] > 5) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const defaultGrowthData: GrowthData = {
   Engineering: {
     Frontend: 0,
@@ -55,6 +82,8 @@ const getDefaultGrowthData = (): GrowthData => {
 };
 
 const trimGrowthData = (data: any) => {
+  if (!data) return null;
+
   // delete deprecated data
   const blackList = ["Engineering.DataAnalytics"];
   blackList.forEach((key) => {
@@ -67,12 +96,10 @@ const trimGrowthData = (data: any) => {
     delete d[splittedKeys[splittedKeys.length - 1]];
   });
 
-  // delete data if not valid
-  Object.keys(data).forEach((domain) => {
-    if (!defaultGrowthData[domain as GrowthDomain]) {
-      data = {};
-    }
-  });
+  // delete corrupted data
+  if (!checkValidGrowthData(defaultGrowthData, data)) {
+    return null;
+  }
 
   // append data if empty
   Object.keys(defaultGrowthData).forEach((domain) => {
@@ -80,6 +107,13 @@ const trimGrowthData = (data: any) => {
   });
 
   return data;
+};
+const parseJSON = (obj: string) => {
+  try {
+    return JSON.parse(obj);
+  } catch (error) {
+    return null;
+  }
 };
 
 const exportUrlAddress = ref<string>("");
@@ -109,23 +143,33 @@ export const useTabStore = defineStore("GrowthStore", () => {
       window.alert("Invalid URL");
       return;
     }
-    tabData.value.push({
+    const data = {
       id: idGenerator.next().value,
-      growthData: pipe(queryValue, atob, JSON.parse, (data) => trimGrowthData(data)),
-    });
+      growthData: pipe(queryValue, atob, parseJSON, (data) => trimGrowthData(data)),
+    };
+    if (!data.growthData) {
+      return window.alert("Your data is corrupted");
+    }
+
+    tabData.value.push(data);
   };
 
   const importJson = (jsonString: string, filename?: string) => {
-    tabData.value.push({
+    const data = {
       id: idGenerator.next().value,
       name: filename,
       growthData: pipe(
         jsonString,
         (txt) => txt.trim(),
-        JSON.parse,
+        parseJSON,
         (data) => trimGrowthData(data),
       ),
-    });
+    };
+    if (!data.growthData) {
+      return window.alert("Your data is corrupted");
+    }
+
+    tabData.value.push(data);
   };
   const getTabData = (tabIndex: number) => {
     return tabData.value[tabIndex];
