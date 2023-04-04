@@ -1,6 +1,6 @@
 // store/filters.ts
 import { defineStore } from "pinia";
-import { GrowthData } from "~~/types/Growth";
+import { GrowthData, GrowthDomain } from "~~/types/Growth";
 import { get, isNil } from "lodash-es";
 import { pipe } from "@fxts/core";
 import { useStorage } from "@vueuse/core";
@@ -8,44 +8,54 @@ import { useIO } from "~~/composables/useIO";
 import { useToastStore } from "./useToastStore";
 import { useClipboard } from "@vueuse/core";
 import { TabData } from "~~/types/Growth";
+import cloneDeep from "lodash-es/cloneDeep";
 
 const { getFilename } = useIO();
 const tabData = useStorage<TabData[]>("tabData", []);
 const toastStore = useToastStore();
+const defaultGrowthData: GrowthData = {
+  Engineering: {
+    Frontend: 0,
+    Hardware: 0,
+    Mobile: 0,
+    DataEngineering: 0,
+    Ops: 0,
+    Backend: 0,
+    Firmware: 0,
+    MachineL: 0,
+  },
+  Execution: {
+    Delivery: 0,
+    Optimization: 0,
+    Communication: 0,
+    Quality: 0,
+  },
+  Supporting: {
+    GrowingTogether: 0,
+    Accomplishment: 0,
+    PeopleMinded: 0,
+    OrgDev: 0,
+  },
+  Strengthening: {
+    Mentorship: 0,
+    Recruitment: 0,
+    Evangelism: 0,
+    Community: 0,
+  },
+  DataAnalytics: {
+    BusinessAnalytics: 0,
+    ProductAnalytics: 0,
+    DataScience: 0,
+    BiEngineering: 0,
+  },
+};
+
 const getDefaultGrowthData = (): GrowthData => {
-  return {
-    Engineering: {
-      Frontend: 0,
-      Hardware: 0,
-      Mobile: 0,
-      DataEngineering: 0,
-      Ops: 0,
-      Backend: 0,
-      Firmware: 0,
-      MachineL: 0,
-    },
-    Execution: {
-      Delivery: 0,
-      Optimization: 0,
-      Communication: 0,
-      Quality: 0,
-    },
-    Supporting: {
-      GrowingTogether: 0,
-      Accomplishment: 0,
-      PeopleMinded: 0,
-      OrgDev: 0,
-    },
-    Strengthening: {
-      Mentorship: 0,
-      Recruitment: 0,
-      Evangelism: 0,
-      Community: 0,
-    },
-  };
+  return cloneDeep(defaultGrowthData);
 };
 
 const trimGrowthData = (data: any) => {
+  // delete deprecated data
   const blackList = ["Engineering.DataAnalytics"];
   blackList.forEach((key) => {
     if (isNil(get(data, key))) return;
@@ -56,6 +66,19 @@ const trimGrowthData = (data: any) => {
     }
     delete d[splittedKeys[splittedKeys.length - 1]];
   });
+
+  // delete data if not valid
+  Object.keys(data).forEach((domain) => {
+    if (!defaultGrowthData[domain as GrowthDomain]) {
+      data = {};
+    }
+  });
+
+  // append data if empty
+  Object.keys(defaultGrowthData).forEach((domain) => {
+    if (!data[domain]) data[domain] = cloneDeep(defaultGrowthData[domain as GrowthDomain]);
+  });
+
   return data;
 };
 

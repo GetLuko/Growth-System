@@ -56,6 +56,13 @@ const docs = [
         type: "url",
         icon: "pi pi-fw pi-link",
       },
+      {
+        key: "data_analytics",
+        label: "Data Analytics",
+        data: "https://www.notion.so/luko/Analytics-Growth-Track-908451d465894c468c1078c9fff67b70",
+        type: "url",
+        icon: "pi pi-fw pi-link",
+      },
     ],
   },
   {

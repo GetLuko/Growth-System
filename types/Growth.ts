@@ -1,4 +1,4 @@
-export type GrowthDomain = "Engineering" | "Execution" | "Supporting" | "Strengthening";
+export type GrowthDomain = "Engineering" | "Execution" | "Supporting" | "Strengthening" | "DataAnalytics";
 export type Engineering = {
   Frontend: number;
   Hardware: number;
@@ -30,8 +30,15 @@ export type Strengthening = {
   Community: number;
 };
 
+export type DataAnalytics = {
+  BusinessAnalytics: number;
+  ProductAnalytics: number;
+  DataScience: number;
+  BiEngineering: number;
+};
+
 export type GrowthData = {
-  [key in GrowthDomain]: Engineering | Execution | Supporting | Strengthening;
+  [key in GrowthDomain]: Engineering | Execution | Supporting | Strengthening | DataAnalytics;
 };
 
 export type TabData = { id: number; name?: string; growthData: GrowthData };
@@ -50,6 +57,7 @@ export enum ColorsEnum {
   red = "red",
   green = "green",
   yellow = "yellow",
+  violet = "violet",
 }
 
 export type ILevelTitle = {

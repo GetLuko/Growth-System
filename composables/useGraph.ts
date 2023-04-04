@@ -14,6 +14,7 @@ const colorMap = {
   red: "rgba(217, 87, 98)",
   green: "rgba(85, 164, 151)",
   yellow: "rgba(200, 157, 70)",
+  violet: "rgba(128, 0, 255)",
 };
 
 export const useGraph = () => {

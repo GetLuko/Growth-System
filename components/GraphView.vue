@@ -15,6 +15,7 @@ const links: {
   Execution: "https://luko.notion.site/Execution-Growth-Track-e6d072e1ac5b4e518bc2e916eea0f999",
   Supporting: "https://luko.notion.site/Supporting-Growth-Track-3cc636233d624f6d861e542fca0af142",
   Strengthening: "https://luko.notion.site/Strengthening-Growth-Track-f885547be9a74a1f86412fae3e3366ef",
+  DataAnalytics: "https://www.notion.so/luko/Analytics-Growth-Track-908451d465894c468c1078c9fff67b70",
 };
 const tabGrowthData = computed(() => tabData.value[activeTabIdx.value].growthData || {});
 </script>
@@ -39,17 +40,11 @@ const tabGrowthData = computed(() => tabData.value[activeTabIdx.value].growthDat
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
-  // @include below(small) {
-  //   height: calc(100vh - $navbar-height - $result-bar-height);
-  // }
 }
 .item {
   display: flex;
   align-items: center;
   scroll-snap-align: start;
   height: calc(100vh - $navbar-height);
-  // @include below(small) {
-  //   height: calc(100vh - $navbar-height - $result-bar-height);
-  // }
 }
 </style>
