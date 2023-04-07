@@ -1,19 +1,21 @@
 <script setup>
 import { useDialogStore } from "~~/stores/useDialogStore";
 import { storeToRefs } from "pinia";
-import { LazyDialogUrlImport, LazyDialogJsonImport } from "#components";
+import { LazyDialogUrlImport, LazyDialogJsonImport, LazyDialogGoogleExport } from "#components";
 
 const store = useDialogStore();
-const { showDialog, dialogHeader, dialogContent } = storeToRefs(store);
+const { showDialog, dialogHeader, dialogContent, dialogCta } = storeToRefs(store);
 const components = {
   DialogUrlImport: LazyDialogUrlImport,
   DialogJsonImport: LazyDialogJsonImport,
+  DialogGoogleExport: LazyDialogGoogleExport,
 };
 </script>
 <template>
   <Teleport to="body">
     <Dialog
-      class=""
+      :auto-z-index="false"
+      :base-z-index="999"
       v-model:visible="showDialog"
       modal
       :breakpoints="{ '960px': '80vw', '640px': '95vw' }"
@@ -26,7 +28,7 @@ const components = {
 
       <template #footer>
         <Button label="Close" icon="pi pi-times" class="p-button-text" @click="showDialog = false" />
-        <Button label="Import" icon="pi pi-check" autofocus type="submit" form="form-dialog" />
+        <Button :label="dialogCta || 'Submit'" icon="pi pi-check" autofocus type="submit" form="form-dialog" />
       </template>
     </Dialog>
   </Teleport>

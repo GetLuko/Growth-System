@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia";
 const tagStore = useTabStore();
 const dialogStore = useDialogStore();
 const googleStore = useGoogleStore();
-const { showDialog, dialogHeader, dialogContent } = storeToRefs(dialogStore);
+const { showDialog, dialogHeader, dialogContent, dialogCta } = storeToRefs(dialogStore);
 
 const items = [
   { name: "New", icon: "pi-file", action: () => tagStore.createNewData() },
@@ -17,6 +17,7 @@ const items = [
     action: () => {
       dialogHeader.value = "Import from url";
       dialogContent.value = "DialogUrlImport";
+      dialogCta.value = "Import";
       showDialog.value = true;
     },
   },
@@ -26,6 +27,7 @@ const items = [
     action: () => {
       dialogHeader.value = "Import from JSON";
       dialogContent.value = "DialogJsonImport";
+      dialogCta.value = "Import";
       showDialog.value = true;
     },
   },

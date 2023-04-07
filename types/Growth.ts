@@ -41,7 +41,7 @@ export type GrowthData = {
   [key in GrowthDomain]: Engineering | Execution | Supporting | Strengthening | DataAnalytics;
 };
 
-export type TabData = { id: number; name?: string; growthData: GrowthData };
+export type TabData = { id: number; name?: string; folder?: string; folderId?: string; growthData: GrowthData };
 
 export enum LevelsEnum {
   lv3 = "3",

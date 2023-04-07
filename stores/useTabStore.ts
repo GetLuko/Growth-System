@@ -159,7 +159,11 @@ export const useTabStore = defineStore("GrowthStore", () => {
   })();
   const createNewData = (customName?: string) => {
     const id = idGenerator.next().value;
-    tabData.value.push({ id, name: customName || `Data ${id}`, growthData: getDefaultGrowthData() });
+    tabData.value.push({
+      id,
+      name: customName || `Data ${id}`,
+      growthData: getDefaultGrowthData(),
+    });
   };
 
   const importUrl = (urlString: string) => {

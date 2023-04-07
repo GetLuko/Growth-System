@@ -2,10 +2,14 @@
 import { storeToRefs } from "pinia";
 import { useGoogleStore } from "~~/stores/useGoogleStore";
 import { useTabStore } from "~~/stores/useTabStore";
+import { useDialogStore } from "~~/stores/useDialogStore";
 
 const tabStore = useTabStore();
 const googleStore = useGoogleStore();
+const dialogStore = useDialogStore();
 const { activeTabIdx } = storeToRefs(tabStore);
+const { showDialog, dialogHeader, dialogContent, dialogCta } = storeToRefs(dialogStore);
+
 const items = [
   {
     label: "JSON Export",
@@ -18,7 +22,10 @@ const items = [
     label: "Google Drive",
     icon: "pi pi-google",
     command: () => {
-      googleStore.save(activeTabIdx.value);
+      dialogHeader.value = "Save into Google Drive";
+      dialogContent.value = "DialogGoogleExport";
+      dialogCta.value = "Save";
+      showDialog.value = true;
     },
   },
   {

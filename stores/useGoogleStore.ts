@@ -9,7 +9,7 @@ import { useIO } from "~~/composables/useIO";
 
 const tabStore = useTabStore();
 const toastStore = useToastStore();
-const { tabData } = storeToRefs(tabStore);
+const { tabData, activeTabIdx } = storeToRefs(tabStore);
 const CLIENT_ID = "485951106142-grngi08vhqptgh232iv4ekojjevdmu2h.apps.googleusercontent.com";
 const API_KEY = useRuntimeConfig().public.GOOGLE_API_KEY;
 const scopes = "https://www.googleapis.com/auth/drive.file";
@@ -69,12 +69,20 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
     if (data.action === window.google.picker.Action.PICKED) {
       const document = data[window.google.picker.Response.DOCUMENTS][0];
       const fileId = document[window.google.picker.Document.ID];
+      const folderId = document.parentId;
       const { body } = await window.gapi.client.drive.files.get({
         fileId: fileId,
         alt: "media",
       });
+      // fetch folder name
+      const { result } = await window.gapi.client.drive.files.get({
+        fileId: folderId,
+        fields: "name",
+      });
 
       tabStore.importJson(body, document.name.replace(".json", ""));
+      tabData.value[activeTabIdx.value].folder = result.name;
+      tabData.value[activeTabIdx.value].folderId = folderId;
     }
   };
 
@@ -87,7 +95,7 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
         accessToken.value = (await getToken({ prompt: "" })).access_token;
       }
 
-      const view = new window.google.picker.View(window.google.picker.ViewId.DOCS);
+      const view = new window.google.picker.DocsView(window.google.picker.ViewId.DOCS).setIncludeFolders(true);
       view.setMimeTypes("application/json");
       const picker = new window.google.picker.PickerBuilder()
         .setOAuthToken(accessToken.value)
@@ -95,6 +103,37 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
         .addView(view)
         .addView(new window.google.picker.DocsUploadView())
         .setCallback(pickerCallback)
+        .build();
+      picker.setVisible(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const launchFolderPicker = async () => {
+    try {
+      tokenClient.value = await getClient();
+      if (!accessToken.value) {
+        accessToken.value = (await getToken({ prompt: "consent" })).access_token;
+      } else {
+        accessToken.value = (await getToken({ prompt: "" })).access_token;
+      }
+      const view = new window.google.picker.DocsView(window.google.picker.ViewId.FOLDERS)
+        .setParent("root")
+        .setIncludeFolders(true)
+        .setSelectFolderEnabled(true);
+      const picker = new window.google.picker.PickerBuilder()
+        .setOAuthToken(accessToken.value)
+        .setDeveloperKey(API_KEY)
+        .addView(view)
+        .setCallback((data: any) => {
+          if (data.action === window.google.picker.Action.PICKED) {
+            const folder = data.docs[0];
+            const folderId = folder.id;
+            tabData.value[activeTabIdx.value].folder = folder.name;
+            tabData.value[activeTabIdx.value].folderId = folderId;
+          }
+        })
         .build();
       picker.setVisible(true);
     } catch (error) {
@@ -118,9 +157,18 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
       const filename = getFilename(tab);
       form.append(
         "metadata",
-        new Blob([JSON.stringify({ name: filename, mimeType: "application/json" })], {
-          type: "application/json",
-        }),
+        new Blob(
+          [
+            JSON.stringify({
+              name: filename,
+              parents: tab.folderId ? [tab.folderId] : undefined,
+              mimeType: "application/json",
+            }),
+          ],
+          {
+            type: "application/json",
+          },
+        ),
       );
       form.append("file", new Blob([JSON.stringify(growthData)], { type: "application/json" }));
 
@@ -140,5 +188,5 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
     }
   };
 
-  return { launchPicker, save };
+  return { launchPicker, launchFolderPicker, save };
 });
