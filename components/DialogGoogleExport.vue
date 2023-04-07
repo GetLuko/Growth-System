@@ -17,6 +17,10 @@ const action = async () => {
 const openFolderPicker = async () => {
   await googleStore.launchFolderPicker();
 };
+const deleteFolder = () => {
+  tabData.value[activeTabIdx.value].folder = undefined;
+  tabData.value[activeTabIdx.value].folderId = undefined;
+};
 </script>
 <template>
   <form @submit.prevent="action" id="form-dialog">
@@ -28,7 +32,11 @@ const openFolderPicker = async () => {
         class="cursor-pointer p-inputtext-sm"
         @click="openFolderPicker"
       />
-      <i class="pi pi-times-circle" v-if="tabData[activeTabIdx].folder" @click="tabData[activeTabIdx].folder = ''" />
+      <i
+        class="pi pi-times-circle hover:!text-terracotta-500"
+        v-if="tabData[activeTabIdx].folder"
+        @click="deleteFolder"
+      />
     </span>
     <span class="px-2">/</span>
     <InputText v-model="tabData[activeTabIdx].name" :placeholder="tabData[activeTabIdx].name" class="p-inputtext-sm" />

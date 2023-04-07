@@ -52,3 +52,6 @@ $fontFiles: (
 .p-progressbar .p-progressbar-value {
   @apply bg-bluko-500;
 }
+.p-inputtext:enabled:hover {
+  @apply border-bluko-300;
+}
