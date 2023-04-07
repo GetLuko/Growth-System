@@ -50,7 +50,7 @@ const items = [
     <ul class="grid grid-cols-2 gap-4">
       <li
         v-for="item in items"
-        class="border-2 border-bluko-200 rounded-lg p-4 text-center flex flex-col gap-2 cursor-pointer hover:bg-bluko-900 hover:border-bluko-100"
+        class="border-2 border-bluko-200 rounded-lg p-4 text-center flex flex-col gap-2 cursor-pointer hover:bg-bluko-200 hover:border-bluko-100 hover:text-black"
         @click="item.action?.()"
       >
         <i :class="item.icon" class="pi text-[40px]"></i>
