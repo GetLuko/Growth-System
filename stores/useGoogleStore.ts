@@ -12,7 +12,7 @@ const toastStore = useToastStore();
 const { tabData, activeTabIdx } = storeToRefs(tabStore);
 const CLIENT_ID = "485951106142-grngi08vhqptgh232iv4ekojjevdmu2h.apps.googleusercontent.com";
 const API_KEY = useRuntimeConfig().public.GOOGLE_API_KEY;
-const scopes = "https://www.googleapis.com/auth/drive.file";
+const scopes = "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly";
 const accessToken = useStorage("token", "", sessionStorage);
 const loaded = ref(false);
 const tokenClient = ref();
@@ -106,6 +106,7 @@ export const useGoogleStore = defineStore("GoogleStore", () => {
         .build();
       picker.setVisible(true);
     } catch (error) {
+      window.alert("ERROR! Check console message");
       console.error(error);
     }
   };
